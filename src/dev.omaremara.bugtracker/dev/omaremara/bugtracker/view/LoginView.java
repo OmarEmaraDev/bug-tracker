@@ -10,12 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
-public class LoginView extends View {
-  public LoginView(Stage stage) { super(stage); }
-
-  @Override
+public class LoginView implements View {
   public Scene getScene() {
     Label headerLabel = new Label("Login:");
     headerLabel.setStyle("-fx-font-size : 24px;");
@@ -31,7 +27,7 @@ public class LoginView extends View {
     GridPane.setHalignment(loginButton, HPos.RIGHT);
     loginButton.setDefaultButton(true);
 
-    LoginController controller = new LoginController(this.stage);
+    LoginController controller = new LoginController();
     loginButton.setOnAction(e -> controller.login(e));
 
     GridPane grid = new GridPane();

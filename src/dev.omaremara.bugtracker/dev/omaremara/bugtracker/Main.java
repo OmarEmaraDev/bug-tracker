@@ -14,8 +14,8 @@ public class Main extends Application {
   @Override
   public void start(Stage stage) {
     this.primaryStage = stage;
-    this.loginScene = new LoginView(stage).getScene();
-    this.reportsScene = new ReportsView(stage).getScene();
+    this.loginScene = new LoginView().getScene();
+    this.reportsScene = new ReportsView().getScene();
     stage.setScene(this.loginScene);
     stage.show();
   }
