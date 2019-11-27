@@ -3,4 +3,6 @@ src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/Main.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/View.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/LoginView.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/ReportsView.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/NewReportView.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/controller/LoginController.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/controller/NewReportController.java
