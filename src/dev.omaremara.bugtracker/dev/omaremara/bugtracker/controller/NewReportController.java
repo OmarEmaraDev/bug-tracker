@@ -1,6 +1,9 @@
 package dev.omaremara.bugtracker.controller;
 
 import dev.omaremara.bugtracker.Main;
+import dev.omaremara.bugtracker.model.ReportLevel;
+import dev.omaremara.bugtracker.model.ReportPriority;
+import dev.omaremara.bugtracker.model.ReportType;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
@@ -12,17 +15,17 @@ import javafx.stage.Stage;
 public class NewReportController {
   private TextField titleField;
   private TextArea descriptionField;
-  private ChoiceBox<String> typeChoiceBox;
-  private ChoiceBox<String> priorityChoiceBox;
-  private ChoiceBox<String> levelChoiceBox;
+  private ChoiceBox<ReportType> typeChoiceBox;
+  private ChoiceBox<ReportPriority> priorityChoiceBox;
+  private ChoiceBox<ReportLevel> levelChoiceBox;
   private ChoiceBox<String> projectChoiceBox;
   private ChoiceBox<String> assigneeChoiceBox;
   private Label errorLabel;
 
   public NewReportController(TextField titleField, TextArea descriptionField,
-                             ChoiceBox<String> typeChoiceBox,
-                             ChoiceBox<String> priorityChoiceBox,
-                             ChoiceBox<String> levelChoiceBox,
+                             ChoiceBox<ReportType> typeChoiceBox,
+                             ChoiceBox<ReportPriority> priorityChoiceBox,
+                             ChoiceBox<ReportLevel> levelChoiceBox,
                              ChoiceBox<String> projectChoiceBox,
                              ChoiceBox<String> assigneeChoiceBox,
                              Label errorLabel) {

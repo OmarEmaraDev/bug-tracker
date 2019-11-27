@@ -6,3 +6,6 @@ src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/ReportsView.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/NewReportView.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/controller/LoginController.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/controller/NewReportController.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/ReportType.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/ReportPriority.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/ReportLevel.java

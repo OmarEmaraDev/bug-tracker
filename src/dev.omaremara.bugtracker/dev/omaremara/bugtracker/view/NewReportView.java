@@ -1,6 +1,9 @@
 package dev.omaremara.bugtracker.view;
 
 import dev.omaremara.bugtracker.controller.NewReportController;
+import dev.omaremara.bugtracker.model.ReportLevel;
+import dev.omaremara.bugtracker.model.ReportPriority;
+import dev.omaremara.bugtracker.model.ReportType;
 import dev.omaremara.bugtracker.view.View;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -26,26 +29,31 @@ public class NewReportView implements View {
     TextArea descriptionField = new TextArea();
 
     Label typeLabel = new Label("Type:");
-    ChoiceBox<String> typeChoiceBox = new ChoiceBox<String>();
-    typeChoiceBox.getItems().addAll("Type 1", "Type 2", "Type 3");
+    ChoiceBox<ReportType> typeChoiceBox = new ChoiceBox<ReportType>();
+    typeChoiceBox.getItems().addAll(ReportType.values());
+    typeChoiceBox.setValue(ReportType.BUG);
 
     Label priorityLabel = new Label("Priority:");
-    ChoiceBox<String> priorityChoiceBox = new ChoiceBox<String>();
-    priorityChoiceBox.getItems().addAll("Priority 1", "Priority 2",
-                                        "Priority 3");
+    ChoiceBox<ReportPriority> priorityChoiceBox =
+        new ChoiceBox<ReportPriority>();
+    priorityChoiceBox.getItems().addAll(ReportPriority.values());
+    priorityChoiceBox.setValue(ReportPriority.TRIVIAL);
 
     Label levelLabel = new Label("Level:");
-    ChoiceBox<String> levelChoiceBox = new ChoiceBox<String>();
-    levelChoiceBox.getItems().addAll("Level 1", "Level 2", "Level 3");
+    ChoiceBox<ReportLevel> levelChoiceBox = new ChoiceBox<ReportLevel>();
+    levelChoiceBox.getItems().addAll(ReportLevel.values());
+    levelChoiceBox.setValue(ReportLevel.USER);
 
     Label projectLabel = new Label("Level:");
     ChoiceBox<String> projectChoiceBox = new ChoiceBox<String>();
     projectChoiceBox.getItems().addAll("Project 1", "Project 2", "Project 3");
+    projectChoiceBox.setValue("Project 1");
 
     Label assigneeLabel = new Label("Assignee:");
     ChoiceBox<String> assigneeChoiceBox = new ChoiceBox<String>();
     assigneeChoiceBox.getItems().addAll("Assignee 1", "Assignee 2",
                                         "Assignee 3");
+    assigneeChoiceBox.setValue("Assignee 1");
 
     Button submitButton = new Button("Submit");
     GridPane.setHalignment(submitButton, HPos.RIGHT);
