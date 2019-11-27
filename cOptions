@@ -1,0 +1,2 @@
+-p /usr/lib/jvm/javafx-sdk-13/lib
+-d mods/dev.omaremara.bugtracker 

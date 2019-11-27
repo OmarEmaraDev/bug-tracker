@@ -1,0 +1,7 @@
+src/dev.omaremara.bugtracker/module-info.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/Main.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/View.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/LoginView.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/ReportsView.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/controller/Controller.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/controller/LoginController.java
