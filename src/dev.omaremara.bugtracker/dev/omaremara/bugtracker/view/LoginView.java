@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 public class LoginView implements View {
   public Scene getScene() {
@@ -17,8 +18,8 @@ public class LoginView implements View {
     headerLabel.setStyle("-fx-font-size : 24px;");
     GridPane.setHalignment(headerLabel, HPos.LEFT);
 
-    Label usernameLabel = new Label("Username:");
-    TextField usernameField = new TextField();
+    Label emailLabel = new Label("Email:");
+    TextField emailField = new TextField();
 
     Label passwordLabel = new Label("Password:");
     PasswordField passwordField = new PasswordField();
@@ -27,7 +28,11 @@ public class LoginView implements View {
     GridPane.setHalignment(loginButton, HPos.RIGHT);
     loginButton.setDefaultButton(true);
 
-    LoginController controller = new LoginController();
+    Label errorLabel = new Label();
+    errorLabel.setTextFill(Color.RED);
+
+    LoginController controller =
+        new LoginController(emailField, passwordField, errorLabel);
     loginButton.setOnAction(e -> controller.login(e));
 
     GridPane grid = new GridPane();
@@ -35,11 +40,12 @@ public class LoginView implements View {
     grid.setHgap(10);
     grid.setVgap(10);
     grid.add(headerLabel, 0, 0, 2, 1);
-    grid.add(usernameLabel, 0, 1);
-    grid.add(usernameField, 1, 1);
+    grid.add(emailLabel, 0, 1);
+    grid.add(emailField, 1, 1);
     grid.add(passwordLabel, 0, 2);
     grid.add(passwordField, 1, 2);
     grid.add(loginButton, 1, 3);
+    grid.add(errorLabel, 0, 4, 2, 1);
     return new Scene(grid);
   }
 }
