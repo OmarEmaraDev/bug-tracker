@@ -68,7 +68,6 @@ public class NewReportView implements View {
 
     HBox actionRow = new HBox(10, cancelButton, submitButton);
     actionRow.setAlignment(Pos.BOTTOM_RIGHT);
-    GridPane.setHalignment(actionRow, HPos.RIGHT);
 
     Label errorLabel = new Label();
     errorLabel.setTextFill(Color.RED);
