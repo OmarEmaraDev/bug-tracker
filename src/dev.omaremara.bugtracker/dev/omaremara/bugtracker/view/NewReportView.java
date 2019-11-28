@@ -49,7 +49,7 @@ public class NewReportView implements View {
     levelChoiceBox.getItems().addAll(ReportLevel.values());
     levelChoiceBox.setValue(ReportLevel.USER);
 
-    Label projectLabel = new Label("Level:");
+    Label projectLabel = new Label("Project:");
     ChoiceBox<String> projectChoiceBox = new ChoiceBox<String>();
     projectChoiceBox.getItems().addAll("Project 1", "Project 2", "Project 3");
     projectChoiceBox.setValue("Project 1");
