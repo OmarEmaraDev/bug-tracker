@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 public class NewReportView implements View {
@@ -61,8 +62,13 @@ public class NewReportView implements View {
     assigneeChoiceBox.setValue("Assignee 1");
 
     Button submitButton = new Button("Submit");
-    GridPane.setHalignment(submitButton, HPos.RIGHT);
     submitButton.setDefaultButton(true);
+
+    Button cancelButton = new Button("Cancel");
+
+    HBox actionRow = new HBox(10, cancelButton, submitButton);
+    actionRow.setAlignment(Pos.BOTTOM_RIGHT);
+    GridPane.setHalignment(actionRow, HPos.RIGHT);
 
     Label errorLabel = new Label();
     errorLabel.setTextFill(Color.RED);
@@ -73,6 +79,7 @@ public class NewReportView implements View {
         errorLabel);
     attachButton.setOnAction(e -> controller.attach(e));
     submitButton.setOnAction(e -> controller.submit(e));
+    cancelButton.setOnAction(e -> controller.cancel(e));
 
     GridPane grid = new GridPane();
     grid.setAlignment(Pos.CENTER);
@@ -104,7 +111,7 @@ public class NewReportView implements View {
     grid.add(assigneeLabel, 0, 8);
     grid.add(assigneeChoiceBox, 1, 8);
 
-    grid.add(submitButton, 1, 9);
+    grid.add(actionRow, 1, 9);
     grid.add(errorLabel, 0, 10, 2, 1);
     return new Scene(grid);
   }

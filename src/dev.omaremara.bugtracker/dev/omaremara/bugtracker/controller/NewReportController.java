@@ -72,4 +72,10 @@ public class NewReportController {
       this.attachedLabel.setText(selectedFile.getName());
     }
   }
+
+  public void cancel(ActionEvent e) {
+    Stage stage = Main.primaryStage;
+    Scene reportListScene = new ReportListView().getScene();
+    stage.setScene(reportListScene);
+  }
 }
