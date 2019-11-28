@@ -4,6 +4,7 @@ import dev.omaremara.bugtracker.Main;
 import dev.omaremara.bugtracker.model.ReportLevel;
 import dev.omaremara.bugtracker.model.ReportPriority;
 import dev.omaremara.bugtracker.model.ReportType;
+import dev.omaremara.bugtracker.view.ReportsView;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -47,12 +48,14 @@ public class NewReportController {
 
   public void submit(ActionEvent e) {
     Stage stage = Main.primaryStage;
-    Scene scene = Main.reportsScene;
+    Scene reportsScene = new ReportsView().getScene();
+    stage.setScene(reportsScene);
+
     // if (isValidReport) {
     // stage.setScene(scene);
     // }
     // else {
-    this.errorLabel.setText("Invalid report!");
+    // this.errorLabel.setText("Invalid report!");
     // }
   }
 

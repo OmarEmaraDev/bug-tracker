@@ -9,17 +9,12 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
   public static Stage primaryStage;
-  public static Scene loginScene;
-  public static Scene reportsScene;
-  public static Scene newReportScene;
 
   @Override
   public void start(Stage stage) {
     Main.primaryStage = stage;
-    Main.loginScene = new LoginView().getScene();
-    Main.reportsScene = new ReportsView().getScene();
-    Main.newReportScene = new NewReportView().getScene();
-    stage.setScene(Main.loginScene);
+    Scene loginScene = new LoginView().getScene();
+    stage.setScene(loginScene);
     stage.show();
   }
 
