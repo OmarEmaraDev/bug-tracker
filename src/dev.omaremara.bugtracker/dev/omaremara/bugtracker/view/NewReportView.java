@@ -28,6 +28,11 @@ public class NewReportView implements View {
     Label descriptionLabel = new Label("Description:");
     TextArea descriptionField = new TextArea();
 
+    Label attachedLabel = new Label("No attached screenshot.");
+    GridPane.setHalignment(attachedLabel, HPos.LEFT);
+    Button attachButton = new Button("Attach Screenshot");
+    GridPane.setHalignment(attachButton, HPos.RIGHT);
+
     Label typeLabel = new Label("Type:");
     ChoiceBox<ReportType> typeChoiceBox = new ChoiceBox<ReportType>();
     typeChoiceBox.getItems().addAll(ReportType.values());
@@ -63,8 +68,10 @@ public class NewReportView implements View {
     errorLabel.setTextFill(Color.RED);
 
     NewReportController controller = new NewReportController(
-        titleField, descriptionField, typeChoiceBox, priorityChoiceBox,
-        levelChoiceBox, projectChoiceBox, assigneeChoiceBox, errorLabel);
+        titleField, descriptionField, attachedLabel, typeChoiceBox,
+        priorityChoiceBox, levelChoiceBox, projectChoiceBox, assigneeChoiceBox,
+        errorLabel);
+    attachButton.setOnAction(e -> controller.attach(e));
     submitButton.setOnAction(e -> controller.submit(e));
 
     GridPane grid = new GridPane();
@@ -79,23 +86,26 @@ public class NewReportView implements View {
     grid.add(descriptionLabel, 0, 2);
     grid.add(descriptionField, 1, 2);
 
-    grid.add(typeLabel, 0, 3);
-    grid.add(typeChoiceBox, 1, 3);
+    grid.add(attachedLabel, 1, 3);
+    grid.add(attachButton, 1, 3);
 
-    grid.add(priorityLabel, 0, 4);
-    grid.add(priorityChoiceBox, 1, 4);
+    grid.add(typeLabel, 0, 4);
+    grid.add(typeChoiceBox, 1, 4);
 
-    grid.add(levelLabel, 0, 5);
-    grid.add(levelChoiceBox, 1, 5);
+    grid.add(priorityLabel, 0, 5);
+    grid.add(priorityChoiceBox, 1, 5);
 
-    grid.add(projectLabel, 0, 6);
-    grid.add(projectChoiceBox, 1, 6);
+    grid.add(levelLabel, 0, 6);
+    grid.add(levelChoiceBox, 1, 6);
 
-    grid.add(assigneeLabel, 0, 7);
-    grid.add(assigneeChoiceBox, 1, 7);
+    grid.add(projectLabel, 0, 7);
+    grid.add(projectChoiceBox, 1, 7);
 
-    grid.add(submitButton, 1, 8);
-    grid.add(errorLabel, 0, 9, 2, 1);
+    grid.add(assigneeLabel, 0, 8);
+    grid.add(assigneeChoiceBox, 1, 8);
+
+    grid.add(submitButton, 1, 9);
+    grid.add(errorLabel, 0, 10, 2, 1);
     return new Scene(grid);
   }
 }
