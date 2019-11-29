@@ -1,0 +1,3 @@
+-p C:/jvm/javafx-sdk-13/lib
+-d mods/dev.omaremara.bugtracker
+-Xlint
