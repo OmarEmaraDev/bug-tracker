@@ -1,8 +1,6 @@
 package dev.omaremara.bugtracker;
 
 import dev.omaremara.bugtracker.view.LoginView;
-import dev.omaremara.bugtracker.view.NewReportView;
-import dev.omaremara.bugtracker.view.ReportsView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
