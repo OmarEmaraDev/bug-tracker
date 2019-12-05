@@ -11,6 +11,7 @@ public enum ReportLevel {
   private ReportLevel(String uiName) { this.uiName = uiName; }
 
   @Override
+
   public String toString() {
     return this.uiName;
   }
