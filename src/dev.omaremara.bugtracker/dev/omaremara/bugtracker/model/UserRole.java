@@ -1,10 +1,10 @@
 package dev.omaremara.bugtracker.model;
 
 public enum UserRole{
-    TESTER,
-    DEVELOPER,
-    PROJECTMANGER,
-    ADMINISTRATOR;
+    TESTER("Tester"),
+    DEVELOPER("Developer"),
+    PROJECT_MANGER("Project_Manger"),
+    ADMINISTRATOR("Administrator");
 
     private String uiName;
 
