@@ -2,13 +2,13 @@ package dev.omaremara.bugtracker.model;
 
 public class Project {
 
-    private  String Name;
+    private  String name;
 
-    private Project(String Name) {
-        this.uiName = Name;
+    private Project(String name) {
+        this.name = name;
     }
 
     public String toString() {
-        return this.Name;
+        return this.name;
     }
 }

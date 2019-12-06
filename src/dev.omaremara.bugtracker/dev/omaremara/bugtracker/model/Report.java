@@ -45,6 +45,7 @@ public class Report {
   public ReportPriority getPriority() { return priority; }
 
   public ReportType getType() { return type; }
+
   @Override
   public String toString(){
       return this.uiName;

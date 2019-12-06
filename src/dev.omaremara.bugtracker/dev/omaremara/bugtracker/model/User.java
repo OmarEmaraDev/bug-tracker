@@ -3,7 +3,7 @@ package dev.omaremara.bugtracker.model;
 public class User {
     private String email;
     private String password;
-    private String userRole;
+    private UserRole userRole;
     private String name;
 
     public void setEmail(String email) {
