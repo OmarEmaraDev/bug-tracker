@@ -1,17 +1,14 @@
 package dev.omaremara.bugtracker.model;
 
-public enum Project {
-    project1("project1"),
-    project2("project2"),
-    project3("project3");
+public class Project {
 
-    private final String uiName;
+    private  String Name;
 
-    private Project(String uiName) {
-        this.uiName = uiName;
+    private Project(String Name) {
+        this.uiName = Name;
     }
 
     public String toString() {
-        return this.uiName;
+        return this.Name;
     }
 }
