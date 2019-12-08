@@ -4,6 +4,7 @@ import dev.omaremara.bugtracker.Main;
 import dev.omaremara.bugtracker.model.ReportLevel;
 import dev.omaremara.bugtracker.model.ReportPriority;
 import dev.omaremara.bugtracker.model.ReportType;
+import dev.omaremara.bugtracker.model.User;
 import dev.omaremara.bugtracker.view.ReportListView;
 import java.io.File;
 import javafx.event.ActionEvent;
@@ -24,7 +25,7 @@ public class NewReportController {
   private ChoiceBox<ReportPriority> priorityChoiceBox;
   private ChoiceBox<ReportLevel> levelChoiceBox;
   private ChoiceBox<String> projectChoiceBox;
-  private ChoiceBox<String> assigneeChoiceBox;
+  private ChoiceBox<User> assigneeChoiceBox;
   private Label errorLabel;
 
   public NewReportController(TextField titleField, TextArea descriptionField,
@@ -33,7 +34,7 @@ public class NewReportController {
                              ChoiceBox<ReportPriority> priorityChoiceBox,
                              ChoiceBox<ReportLevel> levelChoiceBox,
                              ChoiceBox<String> projectChoiceBox,
-                             ChoiceBox<String> assigneeChoiceBox,
+                             ChoiceBox<User> assigneeChoiceBox,
                              Label errorLabel) {
     this.titleField = titleField;
     this.descriptionField = descriptionField;

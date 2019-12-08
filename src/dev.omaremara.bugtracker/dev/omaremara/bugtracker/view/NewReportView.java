@@ -4,7 +4,9 @@ import dev.omaremara.bugtracker.controller.NewReportController;
 import dev.omaremara.bugtracker.model.ReportLevel;
 import dev.omaremara.bugtracker.model.ReportPriority;
 import dev.omaremara.bugtracker.model.ReportType;
+import dev.omaremara.bugtracker.model.User;
 import dev.omaremara.bugtracker.view.View;
+import java.util.List;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -56,10 +58,10 @@ public class NewReportView implements View {
     projectChoiceBox.setValue("Project 1");
 
     Label assigneeLabel = new Label("Assignee:");
-    ChoiceBox<String> assigneeChoiceBox = new ChoiceBox<String>();
-    assigneeChoiceBox.getItems().addAll("Assignee 1", "Assignee 2",
-                                        "Assignee 3");
-    assigneeChoiceBox.setValue("Assignee 1");
+    ChoiceBox<User> assigneeChoiceBox = new ChoiceBox<User>();
+    List<User> developers = User.getAllDevelopers();
+    assigneeChoiceBox.getItems().addAll(developers);
+    assigneeChoiceBox.setValue(developers.get(0));
 
     Button submitButton = new Button("Submit");
     submitButton.setDefaultButton(true);
