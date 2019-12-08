@@ -1,6 +1,7 @@
 package dev.omaremara.bugtracker.view;
 
 import dev.omaremara.bugtracker.controller.NewReportController;
+import dev.omaremara.bugtracker.model.Project;
 import dev.omaremara.bugtracker.model.ReportLevel;
 import dev.omaremara.bugtracker.model.ReportPriority;
 import dev.omaremara.bugtracker.model.ReportType;
@@ -53,9 +54,10 @@ public class NewReportView implements View {
     levelChoiceBox.setValue(ReportLevel.USER);
 
     Label projectLabel = new Label("Project:");
-    ChoiceBox<String> projectChoiceBox = new ChoiceBox<String>();
-    projectChoiceBox.getItems().addAll("Project 1", "Project 2", "Project 3");
-    projectChoiceBox.setValue("Project 1");
+    ChoiceBox<Project> projectChoiceBox = new ChoiceBox<Project>();
+    List<Project> projects = Project.getAllProjects();
+    projectChoiceBox.getItems().addAll(projects);
+    projectChoiceBox.setValue(projects.get(0));
 
     Label assigneeLabel = new Label("Assignee:");
     ChoiceBox<User> assigneeChoiceBox = new ChoiceBox<User>();

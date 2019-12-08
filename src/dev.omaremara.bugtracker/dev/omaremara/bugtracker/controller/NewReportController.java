@@ -1,6 +1,7 @@
 package dev.omaremara.bugtracker.controller;
 
 import dev.omaremara.bugtracker.Main;
+import dev.omaremara.bugtracker.model.Project;
 import dev.omaremara.bugtracker.model.ReportLevel;
 import dev.omaremara.bugtracker.model.ReportPriority;
 import dev.omaremara.bugtracker.model.ReportType;
@@ -24,7 +25,7 @@ public class NewReportController {
   private ChoiceBox<ReportType> typeChoiceBox;
   private ChoiceBox<ReportPriority> priorityChoiceBox;
   private ChoiceBox<ReportLevel> levelChoiceBox;
-  private ChoiceBox<String> projectChoiceBox;
+  private ChoiceBox<Project> projectChoiceBox;
   private ChoiceBox<User> assigneeChoiceBox;
   private Label errorLabel;
 
@@ -33,7 +34,7 @@ public class NewReportController {
                              ChoiceBox<ReportType> typeChoiceBox,
                              ChoiceBox<ReportPriority> priorityChoiceBox,
                              ChoiceBox<ReportLevel> levelChoiceBox,
-                             ChoiceBox<String> projectChoiceBox,
+                             ChoiceBox<Project> projectChoiceBox,
                              ChoiceBox<User> assigneeChoiceBox,
                              Label errorLabel) {
     this.titleField = titleField;

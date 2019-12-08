@@ -12,3 +12,4 @@ src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/ReportPriority.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/ReportLevel.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/UserRole.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/User.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/Project.java

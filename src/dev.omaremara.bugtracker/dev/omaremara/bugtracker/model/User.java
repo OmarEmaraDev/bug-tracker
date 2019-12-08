@@ -32,7 +32,7 @@ public class User {
                             UserRole.DEVELOPER));
     developers.add(new User(1, "Karim", "karim@gmail.com", "password",
                             UserRole.DEVELOPER));
-    developers.add(new User(1, "Mohamed", "mohamed@gmail.com", "password",
+    developers.add(new User(2, "Mohamed", "mohamed@gmail.com", "password",
                             UserRole.DEVELOPER));
     return developers;
   }
