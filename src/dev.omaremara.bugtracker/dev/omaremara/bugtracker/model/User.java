@@ -1,4 +1,5 @@
 package dev.omaremara.bugtracker.model;
+import dev.omaremara.bugtracker.model.UserRole
 
 public class User {
   public String email;

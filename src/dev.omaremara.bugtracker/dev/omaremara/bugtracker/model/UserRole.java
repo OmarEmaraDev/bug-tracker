@@ -3,7 +3,7 @@ package dev.omaremara.bugtracker.model;
 public enum UserRole{
     TESTER("Tester"),
     DEVELOPER("Developer"),
-    PROJECT_MANGER("Project_Manger"),
+    PROJECT_MANGER("Project Manger"),
     ADMINISTRATOR("Administrator");
 
     private String uiName;
