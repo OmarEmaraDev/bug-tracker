@@ -14,3 +14,4 @@ src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/UserRole.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/User.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/Project.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/exception/LoginException.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/exception/DataBaseException.java

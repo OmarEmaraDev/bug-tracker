@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 
 public class NewReportView implements View {
   public Scene getScene() {
+
     Label headerLabel = new Label("New Report:");
     headerLabel.setStyle("-fx-font-size : 24px;");
     GridPane.setHalignment(headerLabel, HPos.LEFT);
@@ -61,9 +62,6 @@ public class NewReportView implements View {
 
     Label assigneeLabel = new Label("Assignee:");
     ChoiceBox<User> assigneeChoiceBox = new ChoiceBox<User>();
-    List<User> developers = User.getAllDevelopers();
-    assigneeChoiceBox.getItems().addAll(developers);
-    assigneeChoiceBox.setValue(developers.get(0));
 
     Button submitButton = new Button("Submit");
     submitButton.setDefaultButton(true);
@@ -80,6 +78,11 @@ public class NewReportView implements View {
         titleField, descriptionField, attachedLabel, typeChoiceBox,
         priorityChoiceBox, levelChoiceBox, projectChoiceBox, assigneeChoiceBox,
         errorLabel);
+
+    List<User> developers = controller.getAllDevelopers();
+    assigneeChoiceBox.getItems().addAll(developers);
+    assigneeChoiceBox.setValue(developers.get(0));
+
     attachButton.setOnAction(e -> controller.attach(e));
     submitButton.setOnAction(e -> controller.submit(e));
     cancelButton.setOnAction(e -> controller.cancel(e));

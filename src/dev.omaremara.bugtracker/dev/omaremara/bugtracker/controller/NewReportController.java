@@ -6,8 +6,12 @@ import dev.omaremara.bugtracker.model.ReportLevel;
 import dev.omaremara.bugtracker.model.ReportPriority;
 import dev.omaremara.bugtracker.model.ReportType;
 import dev.omaremara.bugtracker.model.User;
+import dev.omaremara.bugtracker.model.UserRole;
+import dev.omaremara.bugtracker.model.exception.DataBaseException;
 import dev.omaremara.bugtracker.view.ReportListView;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
@@ -79,5 +83,14 @@ public class NewReportController {
     Stage stage = Main.primaryStage;
     Scene reportListScene = new ReportListView().getScene();
     stage.setScene(reportListScene);
+  }
+
+  public List<User> getAllDevelopers() {
+    try {
+      return User.getAllUsersWithRole(UserRole.DEVELOPER);
+    } catch (DataBaseException exception) {
+      this.errorLabel.setText(exception.getMessage());
+    }
+    return new ArrayList<User>();
   }
 }

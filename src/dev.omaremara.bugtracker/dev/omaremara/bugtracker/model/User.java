@@ -2,6 +2,7 @@ package dev.omaremara.bugtracker.model;
 
 import dev.omaremara.bugtracker.model.User;
 import dev.omaremara.bugtracker.model.UserRole;
+import dev.omaremara.bugtracker.model.exception.DataBaseException;
 import dev.omaremara.bugtracker.model.exception.LoginException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,7 +34,7 @@ public class User {
   }
 
   public static User getUser(String email, String password)
-      throws LoginException {
+      throws LoginException, DataBaseException {
     String connectionURL = System.getProperty("JDBC.connection.url");
     try (Connection connection = DriverManager.getConnection(connectionURL)) {
       String query = "SELECT * FROM users WHERE email = ?";
@@ -55,24 +56,47 @@ public class User {
             }
           }
         } catch (SQLException exception) {
-          throw new LoginException("Could not retrive user from database!");
+          throw new DataBaseException("Could not retrive user from database!",
+                                      exception);
         }
       } catch (SQLException exception) {
-        throw new LoginException("Could not query user from database!");
+        throw new DataBaseException("Could not query user from database!",
+                                    exception);
       }
     } catch (SQLException exception) {
-      throw new LoginException("Could not establish connection to database!");
+      throw new DataBaseException("Could not establish connection to database!",
+                                  exception);
     }
   }
 
-  public static List<User> getAllDevelopers() {
-    List<User> developers = new ArrayList<User>();
-    developers.add(new User(0, "Omar", "mail@OmarEmara.dev", "password",
-                            UserRole.DEVELOPER));
-    developers.add(new User(1, "Karim", "karim@gmail.com", "password",
-                            UserRole.DEVELOPER));
-    developers.add(new User(2, "Mohamed", "mohamed@gmail.com", "password",
-                            UserRole.DEVELOPER));
-    return developers;
+  public static List<User> getAllUsersWithRole(UserRole role)
+      throws DataBaseException {
+    List<User> users = new ArrayList<User>();
+    String connectionURL = System.getProperty("JDBC.connection.url");
+    try (Connection connection = DriverManager.getConnection(connectionURL)) {
+      String query = "SELECT * FROM users WHERE role = ?";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, role.name());
+        try (ResultSet result = statement.executeQuery()) {
+          while (result.next()) {
+            int id = result.getInt("id");
+            String name = result.getString("name");
+            String email = result.getString("email");
+            String password = result.getString("password");
+            users.add(new User(id, name, email, password, role));
+          }
+        } catch (SQLException exception) {
+          throw new DataBaseException("Could not retrive users from database!",
+                                      exception);
+        }
+      } catch (SQLException exception) {
+        throw new DataBaseException("Could not query users from database!",
+                                    exception);
+      }
+    } catch (SQLException exception) {
+      throw new DataBaseException("Could not establish connection to database!",
+                                  exception);
+    }
+    return users;
   }
 }
