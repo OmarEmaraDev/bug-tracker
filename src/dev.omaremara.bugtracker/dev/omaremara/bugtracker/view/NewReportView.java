@@ -56,9 +56,6 @@ public class NewReportView implements View {
 
     Label projectLabel = new Label("Project:");
     ChoiceBox<Project> projectChoiceBox = new ChoiceBox<Project>();
-    List<Project> projects = Project.getAllProjects();
-    projectChoiceBox.getItems().addAll(projects);
-    projectChoiceBox.setValue(projects.get(0));
 
     Label assigneeLabel = new Label("Assignee:");
     ChoiceBox<User> assigneeChoiceBox = new ChoiceBox<User>();
@@ -78,6 +75,10 @@ public class NewReportView implements View {
         titleField, descriptionField, attachedLabel, typeChoiceBox,
         priorityChoiceBox, levelChoiceBox, projectChoiceBox, assigneeChoiceBox,
         errorLabel);
+
+    List<Project> projects = controller.getAllProjects();
+    projectChoiceBox.getItems().addAll(projects);
+    projectChoiceBox.setValue(projects.get(0));
 
     List<User> developers = controller.getAllDevelopers();
     assigneeChoiceBox.getItems().addAll(developers);

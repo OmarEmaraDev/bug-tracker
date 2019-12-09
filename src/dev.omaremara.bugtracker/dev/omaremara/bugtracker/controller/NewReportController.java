@@ -93,4 +93,13 @@ public class NewReportController {
     }
     return new ArrayList<User>();
   }
+
+  public List<Project> getAllProjects() {
+    try {
+      return Project.getAllProjects();
+    } catch (DataBaseException exception) {
+      this.errorLabel.setText(exception.getMessage());
+    }
+    return new ArrayList<Project>();
+  }
 }
