@@ -1,6 +1,8 @@
 package dev.omaremara.bugtracker.controller;
 
 import dev.omaremara.bugtracker.Main;
+import dev.omaremara.bugtracker.model.User;
+import dev.omaremara.bugtracker.model.exception.LoginException;
 import dev.omaremara.bugtracker.view.ReportListView;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -21,17 +23,16 @@ public class LoginController {
     this.errorLabel = errorLabel;
   }
 
-  public void login(ActionEvent e) {
-    Stage stage = Main.primaryStage;
-    Scene reportListScene = new ReportListView().getScene();
-    stage.setScene(reportListScene);
-
-    // if (isValidLogin) {
-    // Main.user = create user;
-    // stage.setScene(scene);
-    // }
-    // else {
-    // errorLabel.setText("Invalid email or password!");
-    // }
+  public void login(ActionEvent event) {
+    try {
+      String email = this.emailField.getText();
+      String password = this.passwordField.getText();
+      Main.user = User.getUser(email, password);
+      Stage stage = Main.primaryStage;
+      Scene reportListScene = new ReportListView().getScene();
+      stage.setScene(reportListScene);
+    } catch (LoginException exception) {
+      this.errorLabel.setText(exception.getMessage());
+    }
   }
 }

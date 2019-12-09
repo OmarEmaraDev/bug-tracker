@@ -1,2 +1,3 @@
--p mods:/usr/lib/jvm/javafx-sdk-13/lib
+-DJDBC.connection.url="jdbc:postgresql:bugtracker"
+-p mods:/usr/lib/jvm/javafx-sdk-13/lib:/usr/share/java/postgresql-jdbc
 -m dev.omaremara.bugtracker/dev.omaremara.bugtracker.Main
