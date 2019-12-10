@@ -1,5 +1,6 @@
 package dev.omaremara.bugtracker;
 
+import dev.omaremara.bugtracker.model.User;
 import dev.omaremara.bugtracker.view.LoginView;
 import javafx.application.Application;
 import javafx.scene.Scene;

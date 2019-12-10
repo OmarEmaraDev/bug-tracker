@@ -4,6 +4,7 @@ import dev.omaremara.bugtracker.model.Project;
 import dev.omaremara.bugtracker.model.ReportLevel;
 import dev.omaremara.bugtracker.model.ReportPriority;
 import dev.omaremara.bugtracker.model.ReportType;
+import dev.omaremara.bugtracker.model.User;
 
 public class Report {
   public int id;
@@ -15,9 +16,9 @@ public class Report {
   public Project project;
   public User assigne;
 
-  class Report
-  (int id, String title, String description, ReportLevel level,
-   ReportPriority priority, ReportType type, Project project, User assigne) {
+  Report(int id, String title, String description, ReportLevel level,
+         ReportPriority priority, ReportType type, Project project,
+         User assigne) {
     this.title = title;
     this.assigne = assigne;
     this.description = description;
