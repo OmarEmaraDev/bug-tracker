@@ -28,7 +28,7 @@ public class LoginController {
     try {
       String email = this.emailField.getText();
       String password = this.passwordField.getText();
-      Main.user = User.getUserFromLogin(email, password);
+      Main.user = User.getFromLogin(email, password);
       Stage stage = Main.primaryStage;
       Scene reportListScene = new ReportListView().getScene();
       stage.setScene(reportListScene);

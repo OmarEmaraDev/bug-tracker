@@ -8,6 +8,7 @@ import dev.omaremara.bugtracker.model.ReportType;
 import dev.omaremara.bugtracker.model.User;
 import dev.omaremara.bugtracker.model.exception.DataBaseException;
 import dev.omaremara.bugtracker.model.exception.InvalidReportException;
+import dev.omaremara.bugtracker.model.exception.LoginException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,6 +16,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Report {
   public int id;
@@ -104,5 +107,53 @@ public class Report {
       throw new DataBaseException("Could not establish connection to database!",
                                   exception);
     }
+  }
+
+  public static Report getFromResultSet(ResultSet result)
+      throws DataBaseException, LoginException {
+    try {
+      int id = result.getInt("id");
+      String title = result.getString("title");
+      String description = result.getString("description");
+      String screenshotPath = result.getString("screenshotPath");
+      ReportType type = ReportType.valueOf(result.getString("type"));
+      ReportPriority priority =
+          ReportPriority.valueOf(result.getString("priority"));
+      ReportLevel level = ReportLevel.valueOf(result.getString("level"));
+      Project project = new Project(result.getString("project"));
+      User user = User.getFromLogin(result.getString("assignee"));
+      LocalDateTime date = result.getObject("date", LocalDateTime.class);
+      ReportStatus status = ReportStatus.valueOf(result.getString("status"));
+      return new Report(id, title, description, screenshotPath, type, priority,
+                        level, project, user, date, status);
+    } catch (SQLException exception) {
+      throw new DataBaseException("Invalid database attributes!", exception);
+    }
+  }
+
+  public static List<Report> getAllReports()
+      throws DataBaseException, LoginException {
+    List<Report> reports = new ArrayList<Report>();
+    String connectionURL = System.getProperty("JDBC.connection.url");
+    try (Connection connection = DriverManager.getConnection(connectionURL)) {
+      String query = "SELECT * FROM reports ORDER BY id";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (ResultSet result = statement.executeQuery()) {
+          while (result.next()) {
+            reports.add(Report.getFromResultSet(result));
+          }
+        } catch (SQLException exception) {
+          throw new DataBaseException(
+              "Could not retrive reports from database!", exception);
+        }
+      } catch (SQLException exception) {
+        throw new DataBaseException("Could not query reports from database!",
+                                    exception);
+      }
+    } catch (SQLException exception) {
+      throw new DataBaseException("Could not establish connection to database!",
+                                  exception);
+    }
+    return reports;
   }
 }

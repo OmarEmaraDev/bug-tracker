@@ -30,8 +30,21 @@ public class User {
     return this.name;
   }
 
-  public static User getUserFromLogin(String email, String password)
-      throws LoginException, DataBaseException {
+  public static User getFromResultSet(ResultSet result)
+      throws DataBaseException {
+    try {
+      String name = result.getString("name");
+      String email = result.getString("email");
+      String password = result.getString("password");
+      UserRole role = UserRole.valueOf(result.getString("role"));
+      return new User(name, email, password, role);
+    } catch (SQLException exception) {
+      throw new DataBaseException("Invalid database attributes!", exception);
+    }
+  }
+
+  public static User getFromLogin(String email)
+      throws DataBaseException, LoginException {
     String connectionURL = System.getProperty("JDBC.connection.url");
     try (Connection connection = DriverManager.getConnection(connectionURL)) {
       String query = "SELECT * FROM users WHERE email = ?";
@@ -42,14 +55,7 @@ public class User {
             throw new LoginException("No user exist with this email!");
           } else {
             result.next();
-            String resultPassword = result.getString("password");
-            if (password.equals(resultPassword)) {
-              String name = result.getString("name");
-              UserRole role = UserRole.valueOf(result.getString("role"));
-              return new User(name, email, password, role);
-            } else {
-              throw new LoginException("Invalid password!");
-            }
+            return User.getFromResultSet(result);
           }
         } catch (SQLException exception) {
           throw new DataBaseException("Could not retrive user from database!",
@@ -65,6 +71,16 @@ public class User {
     }
   }
 
+  public static User getFromLogin(String email, String password)
+      throws LoginException, DataBaseException {
+    User user = User.getFromLogin(email);
+    if (password.equals(user.password)) {
+      return user;
+    } else {
+      throw new LoginException("Invalid password!");
+    }
+  }
+
   public static List<User> getAllUsersWithRole(UserRole role)
       throws DataBaseException {
     List<User> users = new ArrayList<User>();
@@ -75,10 +91,7 @@ public class User {
         statement.setString(1, role.name());
         try (ResultSet result = statement.executeQuery()) {
           while (result.next()) {
-            String name = result.getString("name");
-            String email = result.getString("email");
-            String password = result.getString("password");
-            users.add(new User(name, email, password, role));
+            users.add(User.getFromResultSet(result));
           }
         } catch (SQLException exception) {
           throw new DataBaseException("Could not retrive users from database!",
