@@ -10,13 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Project {
-  public int id;
   public String name;
 
-  public Project(int id, String name) {
-    this.id = id;
-    this.name = name;
-  }
+  public Project(String name) { this.name = name; }
 
   public String toString() { return this.name; }
 
@@ -28,9 +24,8 @@ public class Project {
         String query = "SELECT * FROM projects";
         try (ResultSet result = statement.executeQuery(query)) {
           while (result.next()) {
-            int id = result.getInt("id");
             String name = result.getString("name");
-            projects.add(new Project(id, name));
+            projects.add(new Project(name));
           }
         } catch (SQLException exception) {
           throw new DataBaseException(

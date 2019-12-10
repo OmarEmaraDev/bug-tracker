@@ -13,15 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-  public int id;
   public String name;
   public String email;
   public String password;
   public UserRole role;
 
-  public User(int id, String name, String email, String password,
-              UserRole role) {
-    this.id = id;
+  public User(String name, String email, String password, UserRole role) {
     this.name = name;
     this.email = email;
     this.password = password;
@@ -33,7 +30,7 @@ public class User {
     return this.name;
   }
 
-  public static User getUser(String email, String password)
+  public static User getUserFromLogin(String email, String password)
       throws LoginException, DataBaseException {
     String connectionURL = System.getProperty("JDBC.connection.url");
     try (Connection connection = DriverManager.getConnection(connectionURL)) {
@@ -47,10 +44,9 @@ public class User {
             result.next();
             String resultPassword = result.getString("password");
             if (password.equals(resultPassword)) {
-              int id = result.getInt("id");
               String name = result.getString("name");
               UserRole role = UserRole.valueOf(result.getString("role"));
-              return new User(id, name, email, password, role);
+              return new User(name, email, password, role);
             } else {
               throw new LoginException("Invalid password!");
             }
@@ -79,11 +75,10 @@ public class User {
         statement.setString(1, role.name());
         try (ResultSet result = statement.executeQuery()) {
           while (result.next()) {
-            int id = result.getInt("id");
             String name = result.getString("name");
             String email = result.getString("email");
             String password = result.getString("password");
-            users.add(new User(id, name, email, password, role));
+            users.add(new User(name, email, password, role));
           }
         } catch (SQLException exception) {
           throw new DataBaseException("Could not retrive users from database!",
