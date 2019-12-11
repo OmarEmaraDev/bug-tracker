@@ -14,6 +14,8 @@ import javafx.scene.paint.Color;
 
 public class LoginView implements View {
   public Scene getScene() {
+    LoginController controller = new LoginController();
+
     Label headerLabel = new Label("Login:");
     headerLabel.setStyle("-fx-font-size : 24px;");
     GridPane.setHalignment(headerLabel, HPos.LEFT);
@@ -31,10 +33,6 @@ public class LoginView implements View {
     Label errorLabel = new Label();
     errorLabel.setTextFill(Color.RED);
 
-    LoginController controller =
-        new LoginController(emailField, passwordField, errorLabel);
-    loginButton.setOnAction(e -> controller.login(e));
-
     GridPane grid = new GridPane();
     grid.setAlignment(Pos.CENTER);
     grid.setHgap(10);
@@ -46,6 +44,12 @@ public class LoginView implements View {
     grid.add(passwordField, 1, 2);
     grid.add(loginButton, 1, 3);
     grid.add(errorLabel, 0, 4, 2, 1);
+
+    loginButton.setOnAction(e
+                            -> controller.login(emailLabel.getText(),
+                                                passwordLabel.getText(),
+                                                errorLabel));
+
     return new Scene(grid);
   }
 }
