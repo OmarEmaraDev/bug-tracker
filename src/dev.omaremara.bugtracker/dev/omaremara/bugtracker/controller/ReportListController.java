@@ -10,24 +10,25 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class ReportListController {
-  public void newReport(ActionEvent e) {
+  public void newReport() {
     Stage stage = Main.primaryStage;
     Scene newReportScene = new NewReportView().getScene();
     stage.setScene(newReportScene);
   }
-  public void logOut(ActionEvent e) {
+  public void logOut() {
     Stage stage = Main.primaryStage;
     Scene loginScene = new LoginView().getScene();
     stage.setScene(loginScene);
   }
-  public static List<Report> getAllReports() {
+  public static List<Report> getAllReports(Label errorLabel) {
     try {
       return Report.getAllReports();
     } catch (DataBaseException | LoginException exception) {
-      System.out.println(exception.getMessage());
+      errorLabel.setText(exception.getMessage());
     }
     return new ArrayList<Report>();
   }

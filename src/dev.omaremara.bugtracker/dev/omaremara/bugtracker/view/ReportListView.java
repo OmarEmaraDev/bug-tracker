@@ -19,6 +19,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -26,6 +27,11 @@ import javafx.stage.Stage;
 
 public class ReportListView implements View {
   public Scene getScene() {
+    ReportListController controller = new ReportListController();
+
+    Label errorLabel = new Label();
+    errorLabel.setTextFill(Color.RED);
+
     Button logOutButton = new Button("Log Out");
     ButtonBar.setButtonData(logOutButton, ButtonData.RIGHT);
 
@@ -39,7 +45,7 @@ public class ReportListView implements View {
     reportsGrid.setPadding(new Insets(20));
 
     int i = 0;
-    for (Report report : ReportListController.getAllReports()) {
+    for (Report report : ReportListController.getAllReports(errorLabel)) {
       Label titleLabel = new Label(report.title);
       titleLabel.setStyle("-fx-font-size : 24px;");
 
@@ -66,16 +72,19 @@ public class ReportListView implements View {
     }
 
     Button newReportButton = new Button("New Report");
-    BorderPane.setAlignment(newReportButton, Pos.BOTTOM_RIGHT);
-    BorderPane.setMargin(newReportButton, new Insets(20));
+    newReportButton.setAlignment(Pos.BOTTOM_RIGHT);
     newReportButton.setDefaultButton(true);
 
-    ReportListController controller = new ReportListController();
-    newReportButton.setOnAction(e -> controller.newReport(e));
-    logOutButton.setOnAction(e -> controller.logOut(e));
+    BorderPane bottomBar = new BorderPane();
+    bottomBar.setRight(newReportButton);
+    bottomBar.setLeft(errorLabel);
+    bottomBar.setPadding(new Insets(10));
+
+    newReportButton.setOnAction(e -> controller.newReport());
+    logOutButton.setOnAction(e -> controller.logOut());
 
     BorderPane borderPane = new BorderPane();
-    borderPane.setBottom(newReportButton);
+    borderPane.setBottom(bottomBar);
     borderPane.setCenter(reportsGrid);
     borderPane.setTop(buttonBar);
     return new Scene(borderPane);
