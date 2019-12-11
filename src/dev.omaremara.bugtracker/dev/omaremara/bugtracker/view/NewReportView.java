@@ -22,6 +22,10 @@ import javafx.scene.paint.Color;
 
 public class NewReportView implements View {
   public Scene getScene() {
+    NewReportController controller = new NewReportController();
+
+    Label errorLabel = new Label();
+    errorLabel.setTextFill(Color.RED);
 
     Label headerLabel = new Label("New Report:");
     headerLabel.setStyle("-fx-font-size : 24px;");
@@ -56,9 +60,15 @@ public class NewReportView implements View {
 
     Label projectLabel = new Label("Project:");
     ChoiceBox<Project> projectChoiceBox = new ChoiceBox<Project>();
+    List<Project> projects = controller.getAllProjects(errorLabel);
+    projectChoiceBox.getItems().addAll(projects);
+    projectChoiceBox.setValue(projects.get(0));
 
     Label assigneeLabel = new Label("Assignee:");
     ChoiceBox<User> assigneeChoiceBox = new ChoiceBox<User>();
+    List<User> developers = controller.getAllDevelopers(errorLabel);
+    assigneeChoiceBox.getItems().addAll(developers);
+    assigneeChoiceBox.setValue(developers.get(0));
 
     Button submitButton = new Button("Submit");
     submitButton.setDefaultButton(true);
@@ -67,26 +77,6 @@ public class NewReportView implements View {
 
     HBox actionRow = new HBox(10, cancelButton, submitButton);
     actionRow.setAlignment(Pos.BOTTOM_RIGHT);
-
-    Label errorLabel = new Label();
-    errorLabel.setTextFill(Color.RED);
-
-    NewReportController controller = new NewReportController(
-        titleField, descriptionField, attachedLabel, typeChoiceBox,
-        priorityChoiceBox, levelChoiceBox, projectChoiceBox, assigneeChoiceBox,
-        errorLabel);
-
-    List<Project> projects = controller.getAllProjects();
-    projectChoiceBox.getItems().addAll(projects);
-    projectChoiceBox.setValue(projects.get(0));
-
-    List<User> developers = controller.getAllDevelopers();
-    assigneeChoiceBox.getItems().addAll(developers);
-    assigneeChoiceBox.setValue(developers.get(0));
-
-    attachButton.setOnAction(e -> controller.attach(e));
-    submitButton.setOnAction(e -> controller.submit(e));
-    cancelButton.setOnAction(e -> controller.cancel(e));
 
     GridPane grid = new GridPane();
     grid.setAlignment(Pos.CENTER);
@@ -120,6 +110,17 @@ public class NewReportView implements View {
 
     grid.add(actionRow, 1, 9);
     grid.add(errorLabel, 0, 10, 2, 1);
+
+    attachButton.setOnAction(e -> controller.attach(attachedLabel));
+    cancelButton.setOnAction(e -> controller.cancel());
+    submitButton.setOnAction(
+        e
+        -> controller.submit(
+            titleField.getText(), descriptionField.getText(),
+            typeChoiceBox.getValue(), priorityChoiceBox.getValue(),
+            levelChoiceBox.getValue(), projectChoiceBox.getValue(),
+            assigneeChoiceBox.getValue(), errorLabel));
+
     return new Scene(grid);
   }
 }

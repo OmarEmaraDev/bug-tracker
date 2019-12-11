@@ -46,8 +46,8 @@ public class LoginView implements View {
     grid.add(errorLabel, 0, 4, 2, 1);
 
     loginButton.setOnAction(e
-                            -> controller.login(emailLabel.getText(),
-                                                passwordLabel.getText(),
+                            -> controller.login(emailField.getText(),
+                                                passwordField.getText(),
                                                 errorLabel));
 
     return new Scene(grid);

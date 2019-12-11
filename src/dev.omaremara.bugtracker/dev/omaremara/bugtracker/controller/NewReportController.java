@@ -21,66 +21,33 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 public class NewReportController {
-  private TextField titleField;
-  private TextArea descriptionField;
   private String screenshotPath;
-  private Label attachedLabel;
-  private ChoiceBox<ReportType> typeChoiceBox;
-  private ChoiceBox<ReportPriority> priorityChoiceBox;
-  private ChoiceBox<ReportLevel> levelChoiceBox;
-  private ChoiceBox<Project> projectChoiceBox;
-  private ChoiceBox<User> assigneeChoiceBox;
-  private Label errorLabel;
 
-  public NewReportController(TextField titleField, TextArea descriptionField,
-                             Label attachedLabel,
-                             ChoiceBox<ReportType> typeChoiceBox,
-                             ChoiceBox<ReportPriority> priorityChoiceBox,
-                             ChoiceBox<ReportLevel> levelChoiceBox,
-                             ChoiceBox<Project> projectChoiceBox,
-                             ChoiceBox<User> assigneeChoiceBox,
-                             Label errorLabel) {
-    this.titleField = titleField;
-    this.descriptionField = descriptionField;
-    this.attachedLabel = attachedLabel;
-    this.typeChoiceBox = typeChoiceBox;
-    this.priorityChoiceBox = priorityChoiceBox;
-    this.levelChoiceBox = levelChoiceBox;
-    this.projectChoiceBox = projectChoiceBox;
-    this.assigneeChoiceBox = assigneeChoiceBox;
-    this.errorLabel = errorLabel;
-  }
-
-  public void submit(ActionEvent event) {
+  public void submit(String title, String description, ReportType type,
+                     ReportPriority priority, ReportLevel level,
+                     Project project, User assignee, Label errorLabel) {
     try {
-      Report report = new Report(
-          Report.getReportsCount(), this.titleField.getText(),
-          this.descriptionField.getText(), this.screenshotPath,
-          this.typeChoiceBox.getValue(), this.priorityChoiceBox.getValue(),
-          this.levelChoiceBox.getValue(), this.projectChoiceBox.getValue(),
-          this.assigneeChoiceBox.getValue(), LocalDateTime.now(),
-          ReportStatus.OPEN);
+      Report report =
+          new Report(Report.getReportsCount(), title, description,
+                     this.screenshotPath, type, priority, level, project,
+                     assignee, LocalDateTime.now(), ReportStatus.OPEN);
       report.submit();
       Stage stage = Main.primaryStage;
       Scene reportListScene = new ReportListView().getScene();
       stage.setScene(reportListScene);
     } catch (DataBaseException | InvalidReportException exception) {
-      this.errorLabel.setText(exception.getMessage());
+      errorLabel.setText(exception.getMessage());
     }
   }
 
-  public void attach(ActionEvent e) {
+  public void attach(Label attachedLabel) {
     Stage stage = Main.primaryStage;
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Attach Screenshot");
@@ -91,30 +58,30 @@ public class NewReportController {
     File selectedFile = fileChooser.showOpenDialog(stage);
     if (selectedFile != null) {
       this.screenshotPath = selectedFile.getPath();
-      this.attachedLabel.setText(selectedFile.getName());
+      attachedLabel.setText(selectedFile.getName());
     }
   }
 
-  public void cancel(ActionEvent e) {
+  public void cancel() {
     Stage stage = Main.primaryStage;
     Scene reportListScene = new ReportListView().getScene();
     stage.setScene(reportListScene);
   }
 
-  public List<User> getAllDevelopers() {
+  public List<User> getAllDevelopers(Label errorLabel) {
     try {
       return User.getAllUsersWithRole(UserRole.DEVELOPER);
     } catch (DataBaseException exception) {
-      this.errorLabel.setText(exception.getMessage());
+      errorLabel.setText(exception.getMessage());
     }
     return new ArrayList<User>();
   }
 
-  public List<Project> getAllProjects() {
+  public List<Project> getAllProjects(Label errorLabel) {
     try {
       return Project.getAllProjects();
     } catch (DataBaseException exception) {
-      this.errorLabel.setText(exception.getMessage());
+      errorLabel.setText(exception.getMessage());
     }
     return new ArrayList<Project>();
   }
