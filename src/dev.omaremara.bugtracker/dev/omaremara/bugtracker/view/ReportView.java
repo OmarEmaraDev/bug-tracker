@@ -57,27 +57,27 @@ public class ReportView {
     VBox reportContent = new VBox(10, titleLabel, descriptionLabel);
     reportContent.setPadding(new Insets(20));
 
-    System.out.println(this.report.screenshotPath);
     File imageFile = new File(this.report.screenshotPath);
     if (imageFile.exists()) {
       ImageView image = new ImageView(imageFile.toURI().toString());
       reportContent.getChildren().add(image);
     }
 
-    Button changeStatusButton = new Button("Close");
-    changeStatusButton.setAlignment(Pos.BOTTOM_RIGHT);
-    changeStatusButton.setDefaultButton(true);
+    Button toggleStatusButton = new Button(
+        this.report.status.equals(ReportStatus.OPEN) ? "Close" : "Reopen");
+    toggleStatusButton.setAlignment(Pos.BOTTOM_RIGHT);
+    toggleStatusButton.setDefaultButton(true);
 
     BorderPane bottomBar = new BorderPane();
-    bottomBar.setRight(changeStatusButton);
+    bottomBar.setRight(toggleStatusButton);
     bottomBar.setLeft(errorLabel);
-    bottomBar.setPadding(new Insets(10));
+    bottomBar.setPadding(new Insets(20));
 
-    if (this.report.status.equals(ReportStatus.OPEN)) {
-      changeStatusButton.setOnAction(e -> controller.close(this.report));
-    } else {
-      changeStatusButton.setOnAction(e -> controller.reopen(this.report));
-    }
+    toggleStatusButton.setOnAction(
+        e
+        -> controller.toggleStatus(this.report, toggleStatusButton,
+                                   errorLabel));
+
     backButton.setOnAction(e -> controller.back());
     logOutButton.setOnAction(e -> controller.logOut());
 

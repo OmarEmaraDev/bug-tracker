@@ -109,6 +109,28 @@ public class Report {
     }
   }
 
+  public void updateStatus(ReportStatus newStatus) throws DataBaseException {
+    if (newStatus.equals(this.status)) {
+      return;
+    }
+    String connectionURL = System.getProperty("JDBC.connection.url");
+    try (Connection connection = DriverManager.getConnection(connectionURL)) {
+      String query = "UPDATE reports SET status = ? WHERE id = ?";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, newStatus.name());
+        statement.setInt(2, this.id);
+        statement.executeUpdate();
+      } catch (SQLException exception) {
+        throw new DataBaseException("Could not query report from database!",
+                                    exception);
+      }
+    } catch (SQLException exception) {
+      throw new DataBaseException("Could not establish connection to database!",
+                                  exception);
+    }
+    this.status = newStatus;
+  }
+
   public static Report getFromResultSet(ResultSet result)
       throws DataBaseException, LoginException {
     try {
