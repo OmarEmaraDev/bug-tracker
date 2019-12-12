@@ -6,6 +6,7 @@ import dev.omaremara.bugtracker.model.exception.DataBaseException;
 import dev.omaremara.bugtracker.model.exception.LoginException;
 import dev.omaremara.bugtracker.view.LoginView;
 import dev.omaremara.bugtracker.view.NewReportView;
+import dev.omaremara.bugtracker.view.ReportView;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
@@ -19,11 +20,19 @@ public class ReportListController {
     Scene newReportScene = new NewReportView().getScene();
     stage.setScene(newReportScene);
   }
+
   public void logOut() {
     Stage stage = Main.primaryStage;
     Scene loginScene = new LoginView().getScene();
     stage.setScene(loginScene);
   }
+
+  public void viewReport(Report report) {
+    Stage stage = Main.primaryStage;
+    Scene reportScene = new ReportView(report).getScene();
+    stage.setScene(reportScene);
+  }
+
   public static List<Report> getAllReports(Label errorLabel) {
     try {
       return Report.getAllReports();

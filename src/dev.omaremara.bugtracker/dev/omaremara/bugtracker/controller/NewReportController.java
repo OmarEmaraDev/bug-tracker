@@ -28,7 +28,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 public class NewReportController {
-  private String screenshotPath;
+  private String screenshotPath = "";
 
   public void submit(String title, String description, ReportType type,
                      ReportPriority priority, ReportLevel level,

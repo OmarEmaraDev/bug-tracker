@@ -62,6 +62,8 @@ public class ReportListView implements View {
       Button viewReportButton = new Button("View Report");
       GridPane.setHalignment(viewReportButton, HPos.RIGHT);
 
+      viewReportButton.setOnAction(e -> controller.viewReport(report));
+
       Separator separator = new Separator(Orientation.HORIZONTAL);
       separator.setPadding(new Insets(10, 0, 10, 0));
 
