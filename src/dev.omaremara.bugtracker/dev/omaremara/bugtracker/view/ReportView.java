@@ -21,8 +21,12 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class ReportView {
@@ -49,10 +53,11 @@ public class ReportView {
     buttonBar.getButtons().addAll(backButton, logOutButton);
 
     Label titleLabel = new Label(this.report.title);
-    titleLabel.setStyle("-fx-font-size : 24px;");
+    titleLabel.setFont(Font.font("Regular", FontWeight.BOLD, 24));
 
     Label descriptionLabel = new Label(this.report.description);
     descriptionLabel.setWrapText(true);
+    descriptionLabel.setTextAlignment(TextAlignment.JUSTIFY);
 
     VBox reportContent = new VBox(10, titleLabel, descriptionLabel);
     reportContent.setPadding(new Insets(20));
@@ -62,6 +67,54 @@ public class ReportView {
       ImageView image = new ImageView(imageFile.toURI().toString());
       reportContent.getChildren().add(image);
     }
+
+    Label typeLabel = new Label("Type:");
+    typeLabel.setFont(Font.font("Regular", FontWeight.BOLD, 14));
+    Label typeText = new Label(report.type.toString());
+
+    Label priorityLabel = new Label("Priority:");
+    priorityLabel.setFont(Font.font("Regular", FontWeight.BOLD, 14));
+    Label priorityText = new Label(report.priority.toString());
+
+    Label levelLabel = new Label("Level:");
+    levelLabel.setFont(Font.font("Regular", FontWeight.BOLD, 14));
+    Label levelText = new Label(report.level.toString());
+
+    Label projectLabel = new Label("Project:");
+    projectLabel.setFont(Font.font("Regular", FontWeight.BOLD, 14));
+    Label projectText = new Label(report.project.name);
+
+    Label assigneeLabel = new Label("Assignee:");
+    assigneeLabel.setFont(Font.font("Regular", FontWeight.BOLD, 14));
+    Label assigneeText = new Label(report.assignee.name);
+
+    Label dateLabel = new Label("Date:");
+    dateLabel.setFont(Font.font("Regular", FontWeight.BOLD, 14));
+    Label dateText =
+        new Label(report.date.format(DateTimeFormatter.ISO_LOCAL_DATE));
+
+    Label statusLabel = new Label("Status:");
+    statusLabel.setFont(Font.font("Regular", FontWeight.BOLD, 14));
+    Label statusText = new Label(report.status.toString());
+
+    GridPane sidePanel = new GridPane();
+    sidePanel.add(typeLabel, 0, 0);
+    sidePanel.add(typeText, 1, 0);
+    sidePanel.add(priorityLabel, 0, 1);
+    sidePanel.add(priorityText, 1, 1);
+    sidePanel.add(levelLabel, 0, 2);
+    sidePanel.add(levelText, 1, 2);
+    sidePanel.add(projectLabel, 0, 3);
+    sidePanel.add(projectText, 1, 3);
+    sidePanel.add(assigneeLabel, 0, 4);
+    sidePanel.add(assigneeText, 1, 4);
+    sidePanel.add(dateLabel, 0, 5);
+    sidePanel.add(dateText, 1, 5);
+    sidePanel.add(statusLabel, 0, 6);
+    sidePanel.add(statusText, 1, 6);
+    sidePanel.setPadding(new Insets(20));
+    sidePanel.setVgap(5);
+    sidePanel.setHgap(5);
 
     Button toggleStatusButton = new Button(
         this.report.status.equals(ReportStatus.OPEN) ? "Close" : "Reopen");
@@ -84,6 +137,7 @@ public class ReportView {
     BorderPane borderPane = new BorderPane();
     borderPane.setBottom(bottomBar);
     borderPane.setCenter(reportContent);
+    borderPane.setRight(sidePanel);
     borderPane.setTop(buttonBar);
     return new Scene(borderPane);
   }
