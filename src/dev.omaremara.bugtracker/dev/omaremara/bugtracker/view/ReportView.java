@@ -117,7 +117,7 @@ public class ReportView {
     sidePanel.setHgap(5);
 
     Button toggleStatusButton = new Button(
-        this.report.status.equals(ReportStatus.OPEN) ? "Close" : "Reopen");
+        this.report.status.equals(ReportStatus.OPENED) ? "Close" : "Reopen");
     toggleStatusButton.setAlignment(Pos.BOTTOM_RIGHT);
     toggleStatusButton.setDefaultButton(true);
 

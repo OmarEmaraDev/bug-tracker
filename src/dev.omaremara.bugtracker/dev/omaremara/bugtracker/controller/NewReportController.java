@@ -37,7 +37,7 @@ public class NewReportController {
       Report report =
           new Report(Report.getReportsCount(), title, description,
                      this.screenshotPath, type, priority, level, project,
-                     assignee, LocalDateTime.now(), ReportStatus.OPEN);
+                     assignee, LocalDateTime.now(), ReportStatus.OPENED);
       report.submit();
       Stage stage = Main.primaryStage;
       Scene reportListScene = new ReportListView().getScene();

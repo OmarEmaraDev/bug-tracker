@@ -1,9 +1,8 @@
 package dev.omaremara.bugtracker.model;
 
 public enum ReportStatus {
-  OPEN("Open"),
-  CLOSED("Closed"),
-  INVALID("Invalid");
+  OPENED("Opened"),
+  CLOSED("Closed");
 
   private String uiName;
 

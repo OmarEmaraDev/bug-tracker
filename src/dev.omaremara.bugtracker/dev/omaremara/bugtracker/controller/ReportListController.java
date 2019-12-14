@@ -2,6 +2,7 @@ package dev.omaremara.bugtracker.controller;
 
 import dev.omaremara.bugtracker.Main;
 import dev.omaremara.bugtracker.model.Report;
+import dev.omaremara.bugtracker.model.ReportStatus;
 import dev.omaremara.bugtracker.model.exception.DataBaseException;
 import dev.omaremara.bugtracker.model.exception.LoginException;
 import dev.omaremara.bugtracker.view.LoginView;
@@ -15,27 +16,50 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class ReportListController {
-  public void newReport() {
+  public static void newReport() {
     Stage stage = Main.primaryStage;
     Scene newReportScene = new NewReportView().getScene();
     stage.setScene(newReportScene);
   }
 
-  public void logOut() {
+  public static void logOut() {
     Stage stage = Main.primaryStage;
     Scene loginScene = new LoginView().getScene();
     stage.setScene(loginScene);
   }
 
-  public void viewReport(Report report) {
+  public static void viewReport(Report report) {
     Stage stage = Main.primaryStage;
     Scene reportScene = new ReportView(report).getScene();
     stage.setScene(reportScene);
   }
 
-  public static List<Report> getAllReports(Label errorLabel) {
+  public static List<Report> getAllReports(boolean getOpenedReports,
+                                           boolean getClosedReports,
+                                           boolean getMyReportsOnly,
+                                           Label errorLabel) {
     try {
-      return Report.getAllReports();
+      if (getClosedReports ^ getOpenedReports) {
+        if (getMyReportsOnly) {
+          if (getClosedReports) {
+            return Report.getAllReports(ReportStatus.CLOSED, Main.user);
+          } else {
+            return Report.getAllReports(ReportStatus.OPENED, Main.user);
+          }
+        } else {
+          if (getClosedReports) {
+            return Report.getAllReports(ReportStatus.CLOSED, null);
+          } else {
+            return Report.getAllReports(ReportStatus.OPENED, null);
+          }
+        }
+      } else {
+        if (getMyReportsOnly) {
+          return Report.getAllReports(null, Main.user);
+        } else {
+          return Report.getAllReports(null, null);
+        }
+      }
     } catch (DataBaseException | LoginException exception) {
       errorLabel.setText(exception.getMessage());
     }

@@ -9,6 +9,7 @@ import dev.omaremara.bugtracker.model.User;
 import dev.omaremara.bugtracker.model.exception.DataBaseException;
 import dev.omaremara.bugtracker.model.exception.InvalidReportException;
 import dev.omaremara.bugtracker.model.exception.LoginException;
+import java.lang.StringBuilder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -153,13 +154,30 @@ public class Report {
     }
   }
 
-  public static List<Report> getAllReports()
+  public static List<Report> getAllReports(ReportStatus status, User assignee)
       throws DataBaseException, LoginException {
     List<Report> reports = new ArrayList<Report>();
     String connectionURL = System.getProperty("JDBC.connection.url");
     try (Connection connection = DriverManager.getConnection(connectionURL)) {
-      String query = "SELECT * FROM reports ORDER BY id";
+      StringBuilder queryBuilder = new StringBuilder("SELECT * FROM reports ");
+      if (status != null && assignee != null) {
+        queryBuilder.append("WHERE status = ? AND assignee = ? ");
+      } else if (status != null) {
+        queryBuilder.append("WHERE status = ? ");
+      } else if (assignee != null) {
+        queryBuilder.append("WHERE assignee = ? ");
+      }
+      queryBuilder.append("ORDER BY id");
+      String query = queryBuilder.toString();
       try (PreparedStatement statement = connection.prepareStatement(query)) {
+        if (status != null && assignee != null) {
+          statement.setString(1, status.name());
+          statement.setString(2, assignee.email);
+        } else if (status != null) {
+          statement.setString(1, status.name());
+        } else if (assignee != null) {
+          statement.setString(1, assignee.email);
+        }
         try (ResultSet result = statement.executeQuery()) {
           while (result.next()) {
             reports.add(Report.getFromResultSet(result));

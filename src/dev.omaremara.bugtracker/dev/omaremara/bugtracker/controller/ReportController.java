@@ -27,11 +27,11 @@ public class ReportController {
   public void toggleStatus(Report report, Button toggleButton,
                            Label errorLabel) {
     try {
-      if (report.status.equals(ReportStatus.OPEN)) {
+      if (report.status.equals(ReportStatus.OPENED)) {
         report.updateStatus(ReportStatus.CLOSED);
         toggleButton.setText("Reopen");
       } else {
-        report.updateStatus(ReportStatus.OPEN);
+        report.updateStatus(ReportStatus.OPENED);
         toggleButton.setText("Close");
       }
     } catch (DataBaseException exception) {
