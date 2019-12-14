@@ -35,12 +35,23 @@ public class ReportListView implements View {
     Label errorLabel = new Label();
     errorLabel.setTextFill(Color.RED);
 
+    ButtonBar buttonBar = new ButtonBar();
+    buttonBar.setBackground(new Background(new BackgroundFill(
+        Color.web("#24292e"), CornerRadii.EMPTY, Insets.EMPTY)));
+    buttonBar.setPadding(new Insets(10, 20, 10, 20));
+    borderPane.setTop(buttonBar);
+
     Button logOutButton = new Button("Log Out");
     ButtonBar.setButtonData(logOutButton, ButtonData.RIGHT);
+    buttonBar.getButtons().add(logOutButton);
     logOutButton.setOnAction(e -> ReportListController.logOut());
 
-    GridPane reportsGrid = new GridPane();
-    reportsGrid.setPadding(new Insets(20));
+    if (Main.user.role.equals(UserRole.ADMINISTRATOR)) {
+      Button administerButton = new Button("Administer");
+      ButtonBar.setButtonData(administerButton, ButtonData.LEFT);
+      administerButton.setOnAction(e -> ReportListController.administer());
+      buttonBar.getButtons().add(administerButton);
+    }
 
     CheckBox viewOpenedCheckBox = new CheckBox("View Opened");
     viewOpenedCheckBox.setSelected(true);
@@ -51,10 +62,17 @@ public class ReportListView implements View {
 
     VBox viewStatusBox = new VBox(5, viewOpenedCheckBox, viewClosedCheckBox);
     ButtonBar.setButtonData(viewStatusBox, ButtonData.LEFT);
+    buttonBar.getButtons().add(viewStatusBox);
 
     CheckBox onlyViewMineCheckBox = new CheckBox("Only View Mine");
     onlyViewMineCheckBox.setTextFill(Color.WHITE);
     ButtonBar.setButtonData(onlyViewMineCheckBox, ButtonData.LEFT);
+    if (Main.user.role.equals(UserRole.DEVELOPER)) {
+      buttonBar.getButtons().add(onlyViewMineCheckBox);
+    }
+
+    GridPane reportsGrid = new GridPane();
+    reportsGrid.setPadding(new Insets(20));
 
     ReportListView.updateReportsList(
         reportsGrid, errorLabel, viewOpenedCheckBox.isSelected(),
@@ -80,17 +98,6 @@ public class ReportListView implements View {
                                             viewClosedCheckBox.isSelected(),
                                             onlyViewMineCheckBox.isSelected()));
     borderPane.setCenter(reportsGrid);
-
-    ButtonBar buttonBar = new ButtonBar();
-    buttonBar.setBackground(new Background(new BackgroundFill(
-        Color.web("#24292e"), CornerRadii.EMPTY, Insets.EMPTY)));
-    buttonBar.setPadding(new Insets(10, 20, 10, 20));
-    buttonBar.getButtons().addAll(logOutButton, viewStatusBox);
-    borderPane.setTop(buttonBar);
-
-    if (Main.user.role.equals(UserRole.DEVELOPER)) {
-      buttonBar.getButtons().add(onlyViewMineCheckBox);
-    }
 
     BorderPane bottomBar = new BorderPane();
     bottomBar.setLeft(errorLabel);

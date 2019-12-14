@@ -5,6 +5,7 @@ import dev.omaremara.bugtracker.model.Report;
 import dev.omaremara.bugtracker.model.ReportStatus;
 import dev.omaremara.bugtracker.model.exception.DataBaseException;
 import dev.omaremara.bugtracker.model.exception.LoginException;
+import dev.omaremara.bugtracker.view.AdministrationView;
 import dev.omaremara.bugtracker.view.LoginView;
 import dev.omaremara.bugtracker.view.NewReportView;
 import dev.omaremara.bugtracker.view.ReportView;
@@ -26,6 +27,12 @@ public class ReportListController {
     Stage stage = Main.primaryStage;
     Scene loginScene = new LoginView().getScene();
     stage.setScene(loginScene);
+  }
+
+  public static void administer() {
+    Stage stage = Main.primaryStage;
+    Scene administrationScene = new AdministrationView().getScene();
+    stage.setScene(administrationScene);
   }
 
   public static void viewReport(Report report) {
