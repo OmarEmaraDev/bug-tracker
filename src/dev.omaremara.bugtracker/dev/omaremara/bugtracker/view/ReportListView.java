@@ -30,11 +30,14 @@ import javafx.stage.Stage;
 
 public class ReportListView implements View {
   public Scene getScene() {
+    BorderPane borderPane = new BorderPane();
+
     Label errorLabel = new Label();
     errorLabel.setTextFill(Color.RED);
 
     Button logOutButton = new Button("Log Out");
     ButtonBar.setButtonData(logOutButton, ButtonData.RIGHT);
+    logOutButton.setOnAction(e -> ReportListController.logOut());
 
     GridPane reportsGrid = new GridPane();
     reportsGrid.setPadding(new Insets(20));
@@ -76,33 +79,32 @@ public class ReportListView implements View {
                                             viewOpenedCheckBox.isSelected(),
                                             viewClosedCheckBox.isSelected(),
                                             onlyViewMineCheckBox.isSelected()));
+    borderPane.setCenter(reportsGrid);
 
     ButtonBar buttonBar = new ButtonBar();
     buttonBar.setBackground(new Background(new BackgroundFill(
         Color.web("#24292e"), CornerRadii.EMPTY, Insets.EMPTY)));
     buttonBar.setPadding(new Insets(10, 20, 10, 20));
     buttonBar.getButtons().addAll(logOutButton, viewStatusBox);
+    borderPane.setTop(buttonBar);
 
     if (Main.user.role.equals(UserRole.DEVELOPER)) {
       buttonBar.getButtons().add(onlyViewMineCheckBox);
     }
 
-    Button newReportButton = new Button("New Report");
-    newReportButton.setAlignment(Pos.BOTTOM_RIGHT);
-    newReportButton.setDefaultButton(true);
-
     BorderPane bottomBar = new BorderPane();
-    bottomBar.setRight(newReportButton);
     bottomBar.setLeft(errorLabel);
     bottomBar.setPadding(new Insets(10));
 
-    BorderPane borderPane = new BorderPane();
-    borderPane.setBottom(bottomBar);
-    borderPane.setCenter(reportsGrid);
-    borderPane.setTop(buttonBar);
+    if (Main.user.role.equals(UserRole.TESTER)) {
+      Button newReportButton = new Button("New Report");
+      newReportButton.setDefaultButton(true);
+      bottomBar.setRight(newReportButton);
+      newReportButton.setOnAction(e -> ReportListController.newReport());
+    }
 
-    newReportButton.setOnAction(e -> ReportListController.newReport());
-    logOutButton.setOnAction(e -> ReportListController.logOut());
+    borderPane.setBottom(bottomBar);
+
     return new Scene(borderPane);
   }
 
