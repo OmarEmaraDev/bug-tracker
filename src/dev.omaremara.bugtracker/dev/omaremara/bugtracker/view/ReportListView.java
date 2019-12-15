@@ -29,6 +29,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ReportListView implements View {
+  public boolean viewOpened = true;
+  public boolean viewClosed = false;
+  public boolean onlyViewMine = false;
+
   public Scene getScene() {
     BorderPane borderPane = new BorderPane();
 
@@ -74,29 +78,19 @@ public class ReportListView implements View {
     GridPane reportsGrid = new GridPane();
     reportsGrid.setPadding(new Insets(20));
 
-    ReportListView.updateReportsList(
-        reportsGrid, errorLabel, viewOpenedCheckBox.isSelected(),
-        viewClosedCheckBox.isSelected(), onlyViewMineCheckBox.isSelected());
-
-    viewOpenedCheckBox.setOnAction(
-        e
-        -> ReportListView.updateReportsList(reportsGrid, errorLabel,
-                                            viewOpenedCheckBox.isSelected(),
-                                            viewClosedCheckBox.isSelected(),
-                                            onlyViewMineCheckBox.isSelected()));
-    viewClosedCheckBox.setOnAction(
-        e
-        -> ReportListView.updateReportsList(reportsGrid, errorLabel,
-                                            viewOpenedCheckBox.isSelected(),
-                                            viewClosedCheckBox.isSelected(),
-                                            onlyViewMineCheckBox.isSelected()));
-
-    onlyViewMineCheckBox.setOnAction(
-        e
-        -> ReportListView.updateReportsList(reportsGrid, errorLabel,
-                                            viewOpenedCheckBox.isSelected(),
-                                            viewClosedCheckBox.isSelected(),
-                                            onlyViewMineCheckBox.isSelected()));
+    this.updateReportsList(reportsGrid, errorLabel);
+    viewOpenedCheckBox.setOnAction(e -> {
+      this.viewOpened = viewOpenedCheckBox.isSelected();
+      this.updateReportsList(reportsGrid, errorLabel);
+    });
+    viewClosedCheckBox.setOnAction(e -> {
+      this.viewClosed = viewClosedCheckBox.isSelected();
+      this.updateReportsList(reportsGrid, errorLabel);
+    });
+    onlyViewMineCheckBox.setOnAction(e -> {
+      this.onlyViewMine = onlyViewMineCheckBox.isSelected();
+      this.updateReportsList(reportsGrid, errorLabel);
+    });
     borderPane.setCenter(reportsGrid);
 
     BorderPane bottomBar = new BorderPane();
@@ -115,13 +109,11 @@ public class ReportListView implements View {
     return new Scene(borderPane);
   }
 
-  public static void updateReportsList(GridPane reportsGrid, Label errorLabel,
-                                       boolean viewOpened, boolean viewClosed,
-                                       boolean onlyViewMine) {
+  public void updateReportsList(GridPane reportsGrid, Label errorLabel) {
     reportsGrid.getChildren().clear();
     int i = 0;
     for (Report report : ReportListController.getAllReports(
-             viewOpened, viewClosed, onlyViewMine, errorLabel)) {
+             this.viewOpened, this.viewClosed, this.onlyViewMine, errorLabel)) {
       Label titleLabel = new Label(report.title);
       titleLabel.setStyle("-fx-font-size : 24px;");
 
