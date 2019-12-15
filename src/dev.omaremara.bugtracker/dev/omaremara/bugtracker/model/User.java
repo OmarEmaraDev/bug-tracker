@@ -67,6 +67,23 @@ public class User {
     }
   }
 
+  public void delete() throws DataBaseException {
+    String connectionURL = System.getProperty("JDBC.connection.url");
+    try (Connection connection = DriverManager.getConnection(connectionURL)) {
+      String query = "DELETE FROM users WHERE email = ?";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, this.email);
+        statement.executeUpdate();
+      } catch (SQLException exception) {
+        throw new DataBaseException("Could not delete user from database!",
+                                    exception);
+      }
+    } catch (SQLException exception) {
+      throw new DataBaseException("Could not establish connection to database!",
+                                  exception);
+    }
+  }
+
   public static User getFromResultSet(ResultSet result)
       throws DataBaseException {
     try {
@@ -118,14 +135,19 @@ public class User {
     }
   }
 
-  public static List<User> getAllUsersWithRole(UserRole role)
-      throws DataBaseException {
+  public static List<User> getAllUsers(UserRole role) throws DataBaseException {
     List<User> users = new ArrayList<User>();
     String connectionURL = System.getProperty("JDBC.connection.url");
     try (Connection connection = DriverManager.getConnection(connectionURL)) {
-      String query = "SELECT * FROM users WHERE role = ?";
+      StringBuilder queryBuilder = new StringBuilder("SELECT * FROM users ");
+      if (role != null) {
+        queryBuilder.append("WHERE role = ?");
+      }
+      String query = queryBuilder.toString();
       try (PreparedStatement statement = connection.prepareStatement(query)) {
-        statement.setString(1, role.name());
+        if (role != null) {
+          statement.setString(1, role.name());
+        }
         try (ResultSet result = statement.executeQuery()) {
           while (result.next()) {
             users.add(User.getFromResultSet(result));

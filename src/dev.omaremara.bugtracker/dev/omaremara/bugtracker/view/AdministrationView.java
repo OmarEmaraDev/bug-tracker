@@ -34,14 +34,10 @@ public class AdministrationView implements View {
     Button addUserButton = new Button("Add User");
     addUserButton.setOnAction(e -> AdministrationController.addUser());
 
-    Button updateUserButton = new Button("Update User");
-    //    updateUserButton.setOnAction(e -> ReportListController.updateUser());
+    Button deleteUserButton = new Button("Delete User");
+    deleteUserButton.setOnAction(e -> AdministrationController.deleteUser());
 
-    Button removeUserButton = new Button("Remove User");
-    //    removeUserButton.setOnAction(e -> ReportListController.removeUser());
-
-    VBox buttonsBox =
-        new VBox(5, addUserButton, updateUserButton, removeUserButton);
+    VBox buttonsBox = new VBox(5, addUserButton, deleteUserButton);
     buttonsBox.setAlignment(Pos.CENTER);
 
     borderPane.setCenter(buttonsBox);

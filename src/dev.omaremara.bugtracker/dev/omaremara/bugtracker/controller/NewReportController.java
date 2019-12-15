@@ -70,7 +70,7 @@ public class NewReportController {
 
   public List<User> getAllDevelopers(Label errorLabel) {
     try {
-      return User.getAllUsersWithRole(UserRole.DEVELOPER);
+      return User.getAllUsers(UserRole.DEVELOPER);
     } catch (DataBaseException exception) {
       errorLabel.setText(exception.getMessage());
     }
