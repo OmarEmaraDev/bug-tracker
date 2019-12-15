@@ -34,10 +34,10 @@ public class NewReportController {
                      ReportPriority priority, ReportLevel level,
                      Project project, User assignee, Label errorLabel) {
     try {
-      Report report =
-          new Report(Report.getReportsCount(), title, description,
-                     this.screenshotPath, type, priority, level, project,
-                     assignee, LocalDateTime.now(), ReportStatus.OPENED);
+      Report report = new Report(Report.getReportsCount(), title, description,
+                                 this.screenshotPath, type, priority, level,
+                                 project, assignee, Main.user,
+                                 LocalDateTime.now(), ReportStatus.OPENED);
       report.submit();
       Stage stage = Main.primaryStage;
       Scene reportListScene = new ReportListView().getScene();

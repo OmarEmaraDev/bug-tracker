@@ -119,7 +119,7 @@ public class ReportListView implements View {
 
       String infoString = "#" + report.id + " opened on " +
                           report.date.format(DateTimeFormatter.ISO_LOCAL_DATE) +
-                          " By " + report.assignee.name;
+                          " by " + report.author.name + ".";
       Label infoLabel = new Label(infoString);
       infoLabel.setTextFill(Color.GREY);
 

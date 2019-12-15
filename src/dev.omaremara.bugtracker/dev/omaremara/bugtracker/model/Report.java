@@ -30,12 +30,13 @@ public class Report {
   public ReportLevel level;
   public Project project;
   public User assignee;
+  public User author;
   public LocalDateTime date;
   public ReportStatus status;
 
   public Report(int id, String title, String description, String screenshotPath,
                 ReportType type, ReportPriority priority, ReportLevel level,
-                Project project, User assignee, LocalDateTime date,
+                Project project, User assignee, User author, LocalDateTime date,
                 ReportStatus status) {
     this.id = id;
     this.title = title;
@@ -46,6 +47,7 @@ public class Report {
     this.level = level;
     this.project = project;
     this.assignee = assignee;
+    this.author = author;
     this.date = date;
     this.status = status;
   }
@@ -86,7 +88,7 @@ public class Report {
     String connectionURL = System.getProperty("JDBC.connection.url");
     try (Connection connection = DriverManager.getConnection(connectionURL)) {
       String query =
-          "INSERT INTO reports VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+          "INSERT INTO reports VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setInt(1, this.id);
         statement.setString(2, this.title);
@@ -97,8 +99,9 @@ public class Report {
         statement.setString(7, this.level.name());
         statement.setString(8, this.project.name);
         statement.setString(9, this.assignee.email);
-        statement.setObject(10, this.date);
-        statement.setString(11, this.status.name());
+        statement.setString(10, this.author.email);
+        statement.setObject(11, this.date);
+        statement.setString(12, this.status.name());
         statement.executeUpdate();
       } catch (SQLException exception) {
         throw new DataBaseException("Could not add report to database!",
@@ -144,11 +147,12 @@ public class Report {
           ReportPriority.valueOf(result.getString("priority"));
       ReportLevel level = ReportLevel.valueOf(result.getString("level"));
       Project project = new Project(result.getString("project"));
-      User user = User.getFromLogin(result.getString("assignee"));
+      User assignee = User.getFromLogin(result.getString("assignee"));
+      User author = User.getFromLogin(result.getString("author"));
       LocalDateTime date = result.getObject("date", LocalDateTime.class);
       ReportStatus status = ReportStatus.valueOf(result.getString("status"));
       return new Report(id, title, description, screenshotPath, type, priority,
-                        level, project, user, date, status);
+                        level, project, assignee, author, date, status);
     } catch (SQLException exception) {
       throw new DataBaseException("Invalid database attributes!", exception);
     }
