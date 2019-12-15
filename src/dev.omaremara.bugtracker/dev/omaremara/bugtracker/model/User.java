@@ -3,6 +3,7 @@ package dev.omaremara.bugtracker.model;
 import dev.omaremara.bugtracker.model.User;
 import dev.omaremara.bugtracker.model.UserRole;
 import dev.omaremara.bugtracker.model.exception.DataBaseException;
+import dev.omaremara.bugtracker.model.exception.InvalidUserException;
 import dev.omaremara.bugtracker.model.exception.LoginException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,6 +29,42 @@ public class User {
   @Override
   public String toString() {
     return this.name;
+  }
+
+  public void validateUser() throws InvalidUserException {
+    if (this.name.isBlank()) {
+      throw new InvalidUserException("Empty name!");
+    }
+    if (this.email.isBlank()) {
+      throw new InvalidUserException("Empty email!");
+    }
+    if (this.password.isBlank()) {
+      throw new InvalidUserException("Empty password!");
+    }
+    if (this.role == null) {
+      throw new InvalidUserException("Invalid role!");
+    }
+  }
+
+  public void submit() throws DataBaseException, InvalidUserException {
+    validateUser();
+    String connectionURL = System.getProperty("JDBC.connection.url");
+    try (Connection connection = DriverManager.getConnection(connectionURL)) {
+      String query = "INSERT INTO users VALUES (?, ?, ?, ?)";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, this.name);
+        statement.setString(2, this.email);
+        statement.setString(3, this.password);
+        statement.setString(4, this.role.name());
+        statement.executeUpdate();
+      } catch (SQLException exception) {
+        throw new DataBaseException("Could not add user to database!",
+                                    exception);
+      }
+    } catch (SQLException exception) {
+      throw new DataBaseException("Could not establish connection to database!",
+                                  exception);
+    }
   }
 
   public static User getFromResultSet(ResultSet result)

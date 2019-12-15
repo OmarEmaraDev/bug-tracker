@@ -32,7 +32,7 @@ public class AdministrationView implements View {
     backButton.setOnAction(e -> AdministrationController.back());
 
     Button addUserButton = new Button("Add User");
-    //    addUserButton.setOnAction(e -> ReportListController.addUser());
+    addUserButton.setOnAction(e -> AdministrationController.addUser());
 
     Button updateUserButton = new Button("Update User");
     //    updateUserButton.setOnAction(e -> ReportListController.updateUser());
