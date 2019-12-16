@@ -18,12 +18,6 @@ public class ReportController {
     stage.setScene(reportListScene);
   }
 
-  public void logOut() {
-    Stage stage = Main.primaryStage;
-    Scene loginScene = new LoginView().getScene();
-    stage.setScene(loginScene);
-  }
-
   public void toggleStatus(Report report, Button toggleButton,
                            Label errorLabel) {
     try {

@@ -41,17 +41,15 @@ public class ReportView {
     Label errorLabel = new Label();
     errorLabel.setTextFill(Color.RED);
 
-    Button logOutButton = new Button("Log Out");
-    ButtonBar.setButtonData(logOutButton, ButtonData.RIGHT);
-
     Button backButton = new Button("Back");
-    ButtonBar.setButtonData(backButton, ButtonData.LEFT);
+    ButtonBar.setButtonData(backButton, ButtonData.RIGHT);
+    backButton.setOnAction(e -> controller.back());
 
     ButtonBar buttonBar = new ButtonBar();
     buttonBar.setBackground(new Background(new BackgroundFill(
         Color.web("#24292e"), CornerRadii.EMPTY, Insets.EMPTY)));
     buttonBar.setPadding(new Insets(20));
-    buttonBar.getButtons().addAll(backButton, logOutButton);
+    buttonBar.getButtons().addAll(backButton);
 
     Label titleLabel = new Label(this.report.title);
     titleLabel.setFont(Font.font("Regular", FontWeight.BOLD, 24));
@@ -137,9 +135,6 @@ public class ReportView {
       });
       bottomBar.setRight(toggleStatusButton);
     }
-
-    backButton.setOnAction(e -> controller.back());
-    logOutButton.setOnAction(e -> controller.logOut());
 
     BorderPane borderPane = new BorderPane();
     borderPane.setBottom(bottomBar);
