@@ -113,13 +113,12 @@ public class NewReportView implements View {
 
     attachButton.setOnAction(e -> controller.attach(attachedLabel));
     cancelButton.setOnAction(e -> controller.cancel());
-    submitButton.setOnAction(
-        e
-        -> controller.submit(
-            titleField.getText(), descriptionField.getText(),
-            typeChoiceBox.getValue(), priorityChoiceBox.getValue(),
-            levelChoiceBox.getValue(), projectChoiceBox.getValue(),
-            assigneeChoiceBox.getValue(), errorLabel));
+    submitButton.setOnAction(e -> {
+      controller.submit(titleField.getText(), descriptionField.getText(),
+                        typeChoiceBox.getValue(), priorityChoiceBox.getValue(),
+                        levelChoiceBox.getValue(), projectChoiceBox.getValue(),
+                        assigneeChoiceBox.getValue(), errorLabel);
+    });
 
     return new Scene(grid);
   }

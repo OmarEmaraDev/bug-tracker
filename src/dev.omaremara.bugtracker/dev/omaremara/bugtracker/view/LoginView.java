@@ -45,10 +45,10 @@ public class LoginView implements View {
     grid.add(loginButton, 1, 3);
     grid.add(errorLabel, 0, 4, 2, 1);
 
-    loginButton.setOnAction(e
-                            -> controller.login(emailField.getText(),
-                                                passwordField.getText(),
-                                                errorLabel));
+    loginButton.setOnAction(e -> {
+      controller.login(emailField.getText(), passwordField.getText(),
+                       errorLabel);
+    });
 
     return new Scene(grid);
   }

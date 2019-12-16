@@ -68,11 +68,11 @@ public class AddUserView implements View {
     Button addUserButton = new Button("Add User");
     GridPane.setHalignment(addUserButton, HPos.RIGHT);
     addUserButton.setDefaultButton(true);
-    addUserButton.setOnAction(
-        e
-        -> AddUserController.addUser(nameField.getText(), emailField.getText(),
-                                     passwordField.getText(),
-                                     roleChoiceBox.getValue(), errorLabel));
+    addUserButton.setOnAction(e -> {
+      AddUserController.addUser(nameField.getText(), emailField.getText(),
+                                passwordField.getText(),
+                                roleChoiceBox.getValue(), errorLabel);
+    });
 
     grid.add(headerLabel, 0, 0, 2, 1);
     grid.add(nameLabel, 0, 1);

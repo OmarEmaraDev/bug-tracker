@@ -89,6 +89,10 @@ public class ReportView {
     assigneeLabel.setFont(Font.font("Regular", FontWeight.BOLD, 14));
     Label assigneeText = new Label(report.assignee.name);
 
+    Label authorLabel = new Label("Author:");
+    authorLabel.setFont(Font.font("Regular", FontWeight.BOLD, 14));
+    Label authorText = new Label(report.author.name);
+
     Label dateLabel = new Label("Date:");
     dateLabel.setFont(Font.font("Regular", FontWeight.BOLD, 14));
     Label dateText =
@@ -109,10 +113,12 @@ public class ReportView {
     sidePanel.add(projectText, 1, 3);
     sidePanel.add(assigneeLabel, 0, 4);
     sidePanel.add(assigneeText, 1, 4);
-    sidePanel.add(dateLabel, 0, 5);
-    sidePanel.add(dateText, 1, 5);
-    sidePanel.add(statusLabel, 0, 6);
-    sidePanel.add(statusText, 1, 6);
+    sidePanel.add(authorLabel, 0, 5);
+    sidePanel.add(authorText, 1, 5);
+    sidePanel.add(dateLabel, 0, 6);
+    sidePanel.add(dateText, 1, 6);
+    sidePanel.add(statusLabel, 0, 7);
+    sidePanel.add(statusText, 1, 7);
     sidePanel.setPadding(new Insets(20));
     sidePanel.setVgap(5);
     sidePanel.setHgap(5);

@@ -58,9 +58,9 @@ public class DeleteUserView implements View {
     Button deleteUserButton = new Button("Delete User");
     GridPane.setHalignment(deleteUserButton, HPos.RIGHT);
     deleteUserButton.setDefaultButton(true);
-    deleteUserButton.setOnAction(e
-                                 -> DeleteUserController.deleteUser(
-                                     userChoiceBox.getValue(), errorLabel));
+    deleteUserButton.setOnAction(e -> {
+      DeleteUserController.deleteUser(userChoiceBox.getValue(), errorLabel);
+    });
 
     grid.add(headerLabel, 0, 0, 2, 1);
     grid.add(userLabel, 0, 1);
