@@ -1,5 +1,6 @@
 package dev.omaremara.bugtracker.view;
 
+import dev.omaremara.bugtracker.Main;
 import dev.omaremara.bugtracker.controller.ReportController;
 import dev.omaremara.bugtracker.model.Report;
 import dev.omaremara.bugtracker.model.ReportStatus;
@@ -116,20 +117,20 @@ public class ReportView {
     sidePanel.setVgap(5);
     sidePanel.setHgap(5);
 
-    Button toggleStatusButton = new Button(
-        this.report.status.equals(ReportStatus.OPENED) ? "Close" : "Reopen");
-    toggleStatusButton.setAlignment(Pos.BOTTOM_RIGHT);
-    toggleStatusButton.setDefaultButton(true);
-
     BorderPane bottomBar = new BorderPane();
-    bottomBar.setRight(toggleStatusButton);
     bottomBar.setLeft(errorLabel);
     bottomBar.setPadding(new Insets(20));
 
-    toggleStatusButton.setOnAction(
-        e
-        -> controller.toggleStatus(this.report, toggleStatusButton,
-                                   errorLabel));
+    if (Main.user.email.equals(report.assignee.email)) {
+      Button toggleStatusButton = new Button(
+          this.report.status.equals(ReportStatus.OPENED) ? "Close" : "Reopen");
+      toggleStatusButton.setAlignment(Pos.BOTTOM_RIGHT);
+      toggleStatusButton.setDefaultButton(true);
+      toggleStatusButton.setOnAction(e -> {
+        controller.toggleStatus(this.report, toggleStatusButton, errorLabel);
+      });
+      bottomBar.setRight(toggleStatusButton);
+    }
 
     backButton.setOnAction(e -> controller.back());
     logOutButton.setOnAction(e -> controller.logOut());
