@@ -10,8 +10,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class User {
   public String name;
@@ -165,5 +168,33 @@ public class User {
                                   exception);
     }
     return users;
+  }
+
+  public static Map<User, Integer> getUsersStats() throws DataBaseException {
+    Map<User, Integer> stats = new HashMap<User, Integer>();
+    String connectionURL = System.getProperty("JDBC.connection.url");
+    try (Connection connection = DriverManager.getConnection(connectionURL)) {
+      try (Statement statement = connection.createStatement()) {
+        String query =
+            "SELECT users.*, COUNT(*) FROM users INNER JOIN reports "
+            + "ON ((email = assignee AND status = 'CLOSED') OR email = author) "
+            + "GROUP BY name, email, password, role";
+        try (ResultSet result = statement.executeQuery(query)) {
+          while (result.next()) {
+            stats.put(User.getFromResultSet(result), result.getInt("count"));
+          }
+        } catch (SQLException exception) {
+          throw new DataBaseException("Could not retrive users from database!",
+                                      exception);
+        }
+      } catch (SQLException exception) {
+        throw new DataBaseException("Could not query users from database!",
+                                    exception);
+      }
+    } catch (SQLException exception) {
+      throw new DataBaseException("Could not establish connection to database!",
+                                  exception);
+    }
+    return stats;
   }
 }

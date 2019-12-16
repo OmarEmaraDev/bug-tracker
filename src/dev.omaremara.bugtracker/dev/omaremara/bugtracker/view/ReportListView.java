@@ -56,6 +56,12 @@ public class ReportListView implements View {
       administerButton.setOnAction(e -> ReportListController.administer());
       buttonBar.getButtons().add(administerButton);
     }
+    if (Main.user.role.equals(UserRole.MANAGER)) {
+      Button insightsButton = new Button("Insights");
+      ButtonBar.setButtonData(insightsButton, ButtonData.LEFT);
+      insightsButton.setOnAction(e -> ReportListController.insights());
+      buttonBar.getButtons().add(insightsButton);
+    }
 
     CheckBox viewOpenedCheckBox = new CheckBox("View Opened");
     viewOpenedCheckBox.setSelected(true);

@@ -8,6 +8,7 @@ src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/ReportView.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/AdministrationView.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/AddUserView.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/DeleteUserView.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/view/InsightsView.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/ReportType.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/ReportPriority.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/model/ReportLevel.java
@@ -27,3 +28,4 @@ src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/controller/ReportControlle
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/controller/AdministrationController.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/controller/AddUserController.java
 src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/controller/DeleteUserController.java
+src/dev.omaremara.bugtracker/dev/omaremara/bugtracker/controller/InsightsController.java
