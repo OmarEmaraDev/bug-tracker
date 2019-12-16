@@ -48,7 +48,7 @@ public class ReportView {
     ButtonBar buttonBar = new ButtonBar();
     buttonBar.setBackground(new Background(new BackgroundFill(
         Color.web("#24292e"), CornerRadii.EMPTY, Insets.EMPTY)));
-    buttonBar.setPadding(new Insets(20));
+    buttonBar.setPadding(new Insets(10, 20, 10, 20));
     buttonBar.getButtons().addAll(backButton);
 
     Label titleLabel = new Label(this.report.title);
