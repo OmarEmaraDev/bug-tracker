@@ -89,7 +89,7 @@ public class Report {
     try (Connection connection = DriverManager.getConnection(connectionURL)) {
       String query =
           "INSERT INTO reports (id, title, description, screenshotpath, type, "
-          + "priority, level, project, assignee, author, date status) "
+          + "priority, level, project, assignee, author, date, status) "
           + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setInt(1, this.id);
