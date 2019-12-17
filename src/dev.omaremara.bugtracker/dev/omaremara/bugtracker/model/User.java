@@ -53,7 +53,8 @@ public class User {
     validateUser();
     String connectionURL = System.getProperty("JDBC.connection.url");
     try (Connection connection = DriverManager.getConnection(connectionURL)) {
-      String query = "INSERT INTO users VALUES (?, ?, ?, ?)";
+      String query =
+          "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setString(1, this.name);
         statement.setString(2, this.email);
@@ -176,7 +177,7 @@ public class User {
     try (Connection connection = DriverManager.getConnection(connectionURL)) {
       try (Statement statement = connection.createStatement()) {
         String query =
-            "SELECT users.*, COUNT(*) FROM users INNER JOIN reports "
+            "SELECT users.*, COUNT(*) AS count FROM users INNER JOIN reports "
             + "ON ((email = assignee AND status = 'CLOSED') OR email = author) "
             + "GROUP BY name, email, password, role";
         try (ResultSet result = statement.executeQuery(query)) {

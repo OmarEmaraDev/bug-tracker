@@ -65,7 +65,7 @@ public class Report {
     String connectionURL = System.getProperty("JDBC.connection.url");
     try (Connection connection = DriverManager.getConnection(connectionURL)) {
       try (Statement statement = connection.createStatement()) {
-        String query = "SELECT COUNT (*) FROM reports";
+        String query = "SELECT COUNT (*) AS count FROM reports";
         try (ResultSet result = statement.executeQuery(query)) {
           result.next();
           return result.getInt("count");
@@ -88,7 +88,9 @@ public class Report {
     String connectionURL = System.getProperty("JDBC.connection.url");
     try (Connection connection = DriverManager.getConnection(connectionURL)) {
       String query =
-          "INSERT INTO reports VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+          "INSERT INTO reports (id, title, description, screenshotpath, type, "
+          + "priority, level, project, assignee, author, date status) "
+          + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setInt(1, this.id);
         statement.setString(2, this.title);
