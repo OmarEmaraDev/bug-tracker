@@ -52,6 +52,7 @@ public class ReportListView implements View {
     borderPane.setTop(buttonBar);
 
     Button logOutButton = new Button("Log Out");
+    logOutButton.setCancelButton(true);
     ButtonBar.setButtonData(logOutButton, ButtonData.RIGHT);
     buttonBar.getButtons().add(logOutButton);
     logOutButton.setOnAction(e -> ViewUtil.setSceneRoot(new LoginView()));

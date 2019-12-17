@@ -74,6 +74,7 @@ public class NewReportView implements View {
     submitButton.setDefaultButton(true);
 
     Button cancelButton = new Button("Cancel");
+    cancelButton.setCancelButton(true);
 
     HBox actionRow = new HBox(10, cancelButton, submitButton);
     actionRow.setAlignment(Pos.BOTTOM_RIGHT);

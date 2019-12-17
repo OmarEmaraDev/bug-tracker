@@ -39,6 +39,7 @@ public class InsightsView implements View {
     borderPane.setTop(buttonBar);
 
     Button backButton = new Button("Back");
+    backButton.setCancelButton(true);
     ButtonBar.setButtonData(backButton, ButtonData.RIGHT);
     buttonBar.getButtons().add(backButton);
     backButton.setOnAction(e -> ViewUtil.setSceneRoot(new ReportListView()));

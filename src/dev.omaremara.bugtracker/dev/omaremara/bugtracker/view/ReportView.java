@@ -45,6 +45,7 @@ public class ReportView implements View {
     errorLabel.setTextFill(Color.RED);
 
     Button backButton = new Button("Back");
+    backButton.setCancelButton(true);
     ButtonBar.setButtonData(backButton, ButtonData.RIGHT);
     backButton.setOnAction(e -> ViewUtil.setSceneRoot(new ReportListView()));
 
