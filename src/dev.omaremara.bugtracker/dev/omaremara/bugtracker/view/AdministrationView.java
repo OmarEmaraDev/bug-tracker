@@ -1,10 +1,12 @@
 package dev.omaremara.bugtracker.view;
 
-import dev.omaremara.bugtracker.Main;
-import dev.omaremara.bugtracker.controller.AdministrationController;
+import dev.omaremara.bugtracker.util.ViewUtil;
+import dev.omaremara.bugtracker.view.AddUserView;
+import dev.omaremara.bugtracker.view.DeleteUserView;
+import dev.omaremara.bugtracker.view.ReportListView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -17,7 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class AdministrationView implements View {
-  public Scene getScene() {
+  public Parent getRoot() {
     BorderPane borderPane = new BorderPane();
 
     ButtonBar buttonBar = new ButtonBar();
@@ -29,19 +31,20 @@ public class AdministrationView implements View {
     Button backButton = new Button("Back");
     ButtonBar.setButtonData(backButton, ButtonData.RIGHT);
     buttonBar.getButtons().add(backButton);
-    backButton.setOnAction(e -> AdministrationController.back());
+    backButton.setOnAction(e -> ViewUtil.setSceneRoot(new ReportListView()));
 
     Button addUserButton = new Button("Add User");
-    addUserButton.setOnAction(e -> AdministrationController.addUser());
+    addUserButton.setOnAction(e -> ViewUtil.setSceneRoot(new AddUserView()));
 
     Button deleteUserButton = new Button("Delete User");
-    deleteUserButton.setOnAction(e -> AdministrationController.deleteUser());
+    deleteUserButton.setOnAction(
+        e -> ViewUtil.setSceneRoot(new DeleteUserView()));
 
     VBox buttonsBox = new VBox(5, addUserButton, deleteUserButton);
     buttonsBox.setAlignment(Pos.CENTER);
 
     borderPane.setCenter(buttonsBox);
 
-    return new Scene(borderPane);
+    return borderPane;
   }
 }

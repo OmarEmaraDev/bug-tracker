@@ -4,7 +4,7 @@ import dev.omaremara.bugtracker.controller.LoginController;
 import dev.omaremara.bugtracker.view.View;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 public class LoginView implements View {
-  public Scene getScene() {
+  public Parent getRoot() {
     LoginController controller = new LoginController();
 
     Label headerLabel = new Label("Login:");
@@ -50,6 +50,6 @@ public class LoginView implements View {
                        errorLabel);
     });
 
-    return new Scene(grid);
+    return grid;
   }
 }

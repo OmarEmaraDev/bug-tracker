@@ -18,36 +18,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class ReportListController {
-  public static void newReport() {
-    Stage stage = Main.primaryStage;
-    Scene newReportScene = new NewReportView().getScene();
-    stage.setScene(newReportScene);
-  }
-
-  public static void logOut() {
-    Stage stage = Main.primaryStage;
-    Scene loginScene = new LoginView().getScene();
-    stage.setScene(loginScene);
-  }
-
-  public static void administer() {
-    Stage stage = Main.primaryStage;
-    Scene administrationScene = new AdministrationView().getScene();
-    stage.setScene(administrationScene);
-  }
-
-  public static void insights() {
-    Stage stage = Main.primaryStage;
-    Scene insightsScene = new InsightsView().getScene();
-    stage.setScene(insightsScene);
-  }
-
-  public static void viewReport(Report report) {
-    Stage stage = Main.primaryStage;
-    Scene reportScene = new ReportView(report).getScene();
-    stage.setScene(reportScene);
-  }
-
   public static List<Report> getAllReports(boolean getOpenedReports,
                                            boolean getClosedReports,
                                            boolean getMyReportsOnly,

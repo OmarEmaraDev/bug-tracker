@@ -4,6 +4,9 @@ import dev.omaremara.bugtracker.Main;
 import dev.omaremara.bugtracker.controller.ReportController;
 import dev.omaremara.bugtracker.model.Report;
 import dev.omaremara.bugtracker.model.ReportStatus;
+import dev.omaremara.bugtracker.util.ViewUtil;
+import dev.omaremara.bugtracker.view.ReportListView;
+import dev.omaremara.bugtracker.view.View;
 import java.io.File;
 import java.time.format.DateTimeFormatter;
 import javafx.geometry.HPos;
@@ -11,7 +14,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -30,12 +33,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-public class ReportView {
+public class ReportView implements View {
   private Report report;
 
   public ReportView(Report report) { this.report = report; }
 
-  public Scene getScene() {
+  public Parent getRoot() {
     ReportController controller = new ReportController();
 
     Label errorLabel = new Label();
@@ -43,7 +46,7 @@ public class ReportView {
 
     Button backButton = new Button("Back");
     ButtonBar.setButtonData(backButton, ButtonData.RIGHT);
-    backButton.setOnAction(e -> controller.back());
+    backButton.setOnAction(e -> ViewUtil.setSceneRoot(new ReportListView()));
 
     ButtonBar buttonBar = new ButtonBar();
     buttonBar.setBackground(new Background(new BackgroundFill(
@@ -141,6 +144,6 @@ public class ReportView {
     borderPane.setCenter(reportContent);
     borderPane.setRight(sidePanel);
     borderPane.setTop(buttonBar);
-    return new Scene(borderPane);
+    return borderPane;
   }
 }

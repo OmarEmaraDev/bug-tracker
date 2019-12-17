@@ -10,7 +10,7 @@ import dev.omaremara.bugtracker.view.View;
 import java.util.List;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -21,7 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 public class NewReportView implements View {
-  public Scene getScene() {
+  public Parent getRoot() {
     NewReportController controller = new NewReportController();
 
     Label errorLabel = new Label();
@@ -120,6 +120,6 @@ public class NewReportView implements View {
                         assigneeChoiceBox.getValue(), errorLabel);
     });
 
-    return new Scene(grid);
+    return grid;
   }
 }

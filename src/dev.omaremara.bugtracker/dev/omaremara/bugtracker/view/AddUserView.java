@@ -1,12 +1,13 @@
 package dev.omaremara.bugtracker.view;
 
-import dev.omaremara.bugtracker.Main;
 import dev.omaremara.bugtracker.controller.AddUserController;
 import dev.omaremara.bugtracker.model.UserRole;
+import dev.omaremara.bugtracker.util.ViewUtil;
+import dev.omaremara.bugtracker.view.AdministrationView;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -24,7 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class AddUserView implements View {
-  public Scene getScene() {
+  public Parent getRoot() {
     BorderPane borderPane = new BorderPane();
 
     Label errorLabel = new Label();
@@ -39,7 +40,8 @@ public class AddUserView implements View {
     Button backButton = new Button("Back");
     ButtonBar.setButtonData(backButton, ButtonData.RIGHT);
     buttonBar.getButtons().add(backButton);
-    backButton.setOnAction(e -> AddUserController.back());
+    backButton.setOnAction(
+        e -> ViewUtil.setSceneRoot(new AdministrationView()));
 
     GridPane grid = new GridPane();
     grid.setAlignment(Pos.CENTER);
@@ -86,6 +88,6 @@ public class AddUserView implements View {
     grid.add(addUserButton, 1, 5);
     grid.add(errorLabel, 0, 6, 2, 1);
 
-    return new Scene(borderPane);
+    return borderPane;
   }
 }

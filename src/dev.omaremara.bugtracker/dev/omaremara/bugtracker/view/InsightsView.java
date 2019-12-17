@@ -1,12 +1,13 @@
 package dev.omaremara.bugtracker.view;
 
-import dev.omaremara.bugtracker.Main;
 import dev.omaremara.bugtracker.controller.InsightsController;
 import dev.omaremara.bugtracker.model.User;
+import dev.omaremara.bugtracker.util.ViewUtil;
+import dev.omaremara.bugtracker.view.ReportListView;
 import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -24,7 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class InsightsView implements View {
-  public Scene getScene() {
+  public Parent getRoot() {
     BorderPane borderPane = new BorderPane();
 
     Label errorLabel = new Label();
@@ -40,7 +41,7 @@ public class InsightsView implements View {
     Button backButton = new Button("Back");
     ButtonBar.setButtonData(backButton, ButtonData.RIGHT);
     buttonBar.getButtons().add(backButton);
-    backButton.setOnAction(e -> InsightsController.back());
+    backButton.setOnAction(e -> ViewUtil.setSceneRoot(new ReportListView()));
 
     CategoryAxis usersAxis = new CategoryAxis();
     usersAxis.setLabel("Users");
@@ -66,6 +67,6 @@ public class InsightsView implements View {
     borderPane.setCenter(barChart);
     borderPane.setBottom(errorLabel);
 
-    return new Scene(borderPane);
+    return borderPane;
   }
 }

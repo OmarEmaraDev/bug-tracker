@@ -1,5 +1,5 @@
 package dev.omaremara.bugtracker.view;
 
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 
-public interface View { public Scene getScene(); }
+public interface View { public Parent getRoot(); }

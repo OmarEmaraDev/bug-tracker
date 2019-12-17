@@ -11,6 +11,7 @@ import dev.omaremara.bugtracker.model.User;
 import dev.omaremara.bugtracker.model.UserRole;
 import dev.omaremara.bugtracker.model.exception.DataBaseException;
 import dev.omaremara.bugtracker.model.exception.InvalidReportException;
+import dev.omaremara.bugtracker.util.ViewUtil;
 import dev.omaremara.bugtracker.view.ReportListView;
 import java.io.File;
 import java.sql.Connection;
@@ -39,9 +40,7 @@ public class NewReportController {
                                  project, assignee, Main.user,
                                  LocalDateTime.now(), ReportStatus.OPENED);
       report.submit();
-      Stage stage = Main.primaryStage;
-      Scene reportListScene = new ReportListView().getScene();
-      stage.setScene(reportListScene);
+      ViewUtil.setSceneRoot(new ReportListView());
     } catch (DataBaseException | InvalidReportException exception) {
       errorLabel.setText(exception.getMessage());
     }
@@ -62,11 +61,7 @@ public class NewReportController {
     }
   }
 
-  public void cancel() {
-    Stage stage = Main.primaryStage;
-    Scene reportListScene = new ReportListView().getScene();
-    stage.setScene(reportListScene);
-  }
+  public void cancel() { ViewUtil.setSceneRoot(new ReportListView()); }
 
   public List<User> getAllDevelopers(Label errorLabel) {
     try {

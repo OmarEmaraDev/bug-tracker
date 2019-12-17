@@ -4,13 +4,19 @@ import dev.omaremara.bugtracker.Main;
 import dev.omaremara.bugtracker.controller.ReportListController;
 import dev.omaremara.bugtracker.model.Report;
 import dev.omaremara.bugtracker.model.UserRole;
+import dev.omaremara.bugtracker.util.ViewUtil;
+import dev.omaremara.bugtracker.view.AdministrationView;
+import dev.omaremara.bugtracker.view.InsightsView;
+import dev.omaremara.bugtracker.view.LoginView;
+import dev.omaremara.bugtracker.view.NewReportView;
+import dev.omaremara.bugtracker.view.ReportView;
 import java.time.format.DateTimeFormatter;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -33,7 +39,7 @@ public class ReportListView implements View {
   public boolean viewClosed = false;
   public boolean onlyViewMine = false;
 
-  public Scene getScene() {
+  public Parent getRoot() {
     BorderPane borderPane = new BorderPane();
 
     Label errorLabel = new Label();
@@ -48,18 +54,20 @@ public class ReportListView implements View {
     Button logOutButton = new Button("Log Out");
     ButtonBar.setButtonData(logOutButton, ButtonData.RIGHT);
     buttonBar.getButtons().add(logOutButton);
-    logOutButton.setOnAction(e -> ReportListController.logOut());
+    logOutButton.setOnAction(e -> ViewUtil.setSceneRoot(new LoginView()));
 
     if (Main.user.role.equals(UserRole.ADMINISTRATOR)) {
       Button administerButton = new Button("Administer");
       ButtonBar.setButtonData(administerButton, ButtonData.LEFT);
-      administerButton.setOnAction(e -> ReportListController.administer());
+      administerButton.setOnAction(
+          e -> ViewUtil.setSceneRoot(new AdministrationView()));
       buttonBar.getButtons().add(administerButton);
     }
     if (Main.user.role.equals(UserRole.MANAGER)) {
       Button insightsButton = new Button("Insights");
       ButtonBar.setButtonData(insightsButton, ButtonData.LEFT);
-      insightsButton.setOnAction(e -> ReportListController.insights());
+      insightsButton.setOnAction(
+          e -> ViewUtil.setSceneRoot(new InsightsView()));
       buttonBar.getButtons().add(insightsButton);
     }
 
@@ -107,12 +115,13 @@ public class ReportListView implements View {
       Button newReportButton = new Button("New Report");
       newReportButton.setDefaultButton(true);
       bottomBar.setRight(newReportButton);
-      newReportButton.setOnAction(e -> ReportListController.newReport());
+      newReportButton.setOnAction(
+          e -> ViewUtil.setSceneRoot(new NewReportView()));
     }
 
     borderPane.setBottom(bottomBar);
 
-    return new Scene(borderPane);
+    return borderPane;
   }
 
   public void updateReportsList(GridPane reportsGrid, Label errorLabel) {
@@ -137,7 +146,7 @@ public class ReportListView implements View {
       GridPane.setHalignment(viewReportButton, HPos.RIGHT);
 
       viewReportButton.setOnAction(
-          e -> ReportListController.viewReport(report));
+          e -> ViewUtil.setSceneRoot(new ReportView(report)));
 
       Separator separator = new Separator(Orientation.HORIZONTAL);
       separator.setPadding(new Insets(10, 0, 10, 0));
